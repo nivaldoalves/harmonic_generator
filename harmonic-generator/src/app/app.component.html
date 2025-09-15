@@ -83,8 +83,9 @@
           <span class="saved-progression-text" (click)="progression = saved">
             {{ formatProgression(saved) }}
           </span>
-          <button mat-icon-button color="warn" (click)="deleteSavedProgression(i)" aria-label="Delete progression">
+          <button mat-stroked-button color="warn" (click)="deleteSavedProgression(i)" aria-label="Delete progression" matTooltip="Excluir progressão">
             <mat-icon>delete</mat-icon>
+            Excluir
           </button>
         </div>
       </mat-card-content>

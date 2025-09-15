@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { PianoComponent } from './piano/piano';
 
@@ -35,7 +36,8 @@ import { PianoComponent } from './piano/piano';
     MatButtonModule,
     MatSliderModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
