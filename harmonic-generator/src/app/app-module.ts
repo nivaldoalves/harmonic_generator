@@ -13,12 +13,15 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { PianoComponent } from './piano/piano';
 
 
 @NgModule({
   declarations: [
-    App
+    App,
+    PianoComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { FormsModule } from '@angular/forms';
     MatButtonToggleModule,
     MatButtonModule,
     MatSliderModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

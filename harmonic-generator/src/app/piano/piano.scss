@@ -1,0 +1,24 @@
+svg {
+  width: 100%;
+  height: auto;
+  max-width: 400px; /* Match card width */
+  display: block;
+  margin: 0 auto;
+}
+
+.white-key {
+  fill: #ffffff;
+  stroke: #cccccc;
+  stroke-width: 1px;
+  transition: fill 0.15s ease-in-out;
+}
+
+.black-key {
+  fill: #222222;
+  transition: fill 0.15s ease-in-out;
+}
+
+/* Highlight style for any key */
+.highlighted {
+  fill: #ff4081; /* Angular Material Accent Color (Pink) */
+}
