@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicTheoryService, Chord } from './music-theory';
 import { StorageService } from './storage';
+import { AudioService } from './audio.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { StorageService } from './storage';
 })
 export class App implements OnInit {
   // Static data
-  notes = ['C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'];
+  notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
   // State for Harmonic Field
   selectedNote: string = 'C';
@@ -25,9 +26,15 @@ export class App implements OnInit {
   // State for Saved Progressions
   savedProgressions: Chord[][] = [];
 
+  // Playback State
+  isPlaying = false;
+  playbackInterval: any;
+  currentChordIndex = 0;
+
   constructor(
     private musicTheoryService: MusicTheoryService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private audioService: AudioService
   ) {}
 
   ngOnInit() {
@@ -56,6 +63,7 @@ export class App implements OnInit {
   clearCurrentProgression() {
     this.progression = [];
     this.selectedChordNotes = [];
+    this.stopProgression();
   }
 
   // --- Saved Progressions Logic ---
@@ -76,6 +84,40 @@ export class App implements OnInit {
       allNotes.push(...variants);
     });
     this.selectedChordNotes = allNotes;
+    this.playChord(chord);
+  }
+
+  // --- Audio Logic ---
+  playChord(chord: Chord) {
+    const notes = chord.notes.split(' - ');
+    this.audioService.playChord(notes);
+  }
+
+  playProgression() {
+    if (this.progression.length === 0) return;
+
+    this.isPlaying = true;
+    this.currentChordIndex = 0;
+
+    const playNextChord = () => {
+      if (this.currentChordIndex < this.progression.length) {
+        const chord = this.progression[this.currentChordIndex];
+        this.selectChordForPiano(chord);
+        this.currentChordIndex++;
+      } else {
+        this.stopProgression();
+      }
+    };
+
+    this.playbackInterval = setInterval(playNextChord, 1000); // Play subsequent chords every second
+  }
+
+  stopProgression() {
+    this.isPlaying = false;
+    if (this.playbackInterval) {
+      clearInterval(this.playbackInterval);
+      this.playbackInterval = null;
+    }
   }
 
   // --- Utility --- 

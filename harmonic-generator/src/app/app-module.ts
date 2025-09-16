@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { PianoComponent } from './piano/piano';
+import { AudioService } from './audio.service';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { PianoComponent } from './piano/piano';
     MatTooltipModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
+    AudioService
   ],
   bootstrap: [App]
 })

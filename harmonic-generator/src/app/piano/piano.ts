@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { AudioService } from '../audio.service';
 
 // Interface for a single piano key
 export interface PianoKey {
@@ -26,13 +27,17 @@ export class PianoComponent implements OnChanges {
   viewBoxWidth = 245;
   viewBoxHeight = 120;
 
-  constructor() {
+  constructor(private audioService: AudioService) {
     this.buildPianoKeys();
   }
 
   // This lifecycle hook detects when the input property changes
   ngOnChanges() {
     this.updateHighlightedKeys();
+  }
+
+  onKeyClick(key: PianoKey) {
+    this.audioService.playNote(key.name);
   }
 
   private buildPianoKeys() {

@@ -78,22 +78,33 @@
         </div>
         <div *ngIf="progression.length > 0" class="progression-display">
           <span
-            *ngFor="let chord of progression; let last = last"
+            *ngFor="let chord of progression; let i = index; let last = last"
             (click)="selectChordForPiano(chord)"
             style="cursor: pointer"
             class="progression-chord"
+            [class.playing]="isPlaying && i === currentChordIndex"
           >
             {{ chord.name }}{{ !last ? ' - ' : '' }}
           </span>
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="accent" (click)="generateRandomProgression()">
-          Gerar Progressão
-        </button>
-        <button mat-button (click)="saveCurrentProgression()" [disabled]="progression.length === 0">
-          Salvar
-        </button>
+        <div class="progression-controls">
+          <button mat-raised-button color="accent" (click)="generateRandomProgression()">
+            Gerar Progressão
+          </button>
+          <div class="playback-buttons">
+            <button mat-fab color="primary" (click)="playProgression()" [disabled]="progression.length === 0 || isPlaying" matTooltip="Play Progressão">
+              <mat-icon>play_arrow</mat-icon>
+            </button>
+            <button mat-fab color="warn" (click)="stopProgression()" [disabled]="!isPlaying" matTooltip="Stop Progressão">
+              <mat-icon>stop</mat-icon>
+            </button>
+          </div>
+          <button mat-button (click)="saveCurrentProgression()" [disabled]="progression.length === 0">
+            Salvar
+          </button>
+        </div>
         <button
           mat-button
           color="warn"

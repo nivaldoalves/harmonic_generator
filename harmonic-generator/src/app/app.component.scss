@@ -99,6 +99,24 @@ mat-slider {
   border-radius: 4px;
 }
 
+.progression-chord.playing {
+  background-color: #ff4081;
+  color: white;
+  border-radius: 4px;
+}
+
+.progression-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.playback-buttons {
+  display: flex;
+  gap: 16px;
+}
+
 .saved-progression-item {
   display: flex;
   justify-content: space-between;

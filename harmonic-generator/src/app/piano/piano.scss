@@ -21,4 +21,23 @@ svg {
 /* Highlight style for any key */
 .highlighted {
   fill: #ff4081; /* Angular Material Accent Color (Pink) */
+  stroke: white;
+  stroke-width: 2px;
+}
+
+.key-name {
+  text-anchor: middle;
+  font-size: 12px;
+  font-weight: bold;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.white-key-name {
+  fill: #111111;
+}
+
+.black-key-name {
+  fill: #ffffff;
 }
