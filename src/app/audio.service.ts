@@ -8,6 +8,9 @@ export class AudioService {
   private audioContext: AudioContext;
   private readonly baseFrequency = 440; // A4
   private readonly noteFrequencies: { [key: string]: number } = {};
+  private readonly sharpToFlat: { [key: string]: string } = {
+    'C#': 'D♭', 'D#': 'E♭', 'F#': 'G♭', 'G#': 'A♭', 'A#': 'B♭'
+  };
 
   constructor() {
     this.audioContext = new AudioContext();
@@ -20,6 +23,12 @@ export class AudioService {
       const note = notes[i];
       const frequency = this.baseFrequency * Math.pow(2, (i - 9) / 12);
       this.noteFrequencies[note] = frequency;
+
+      // Add flat equivalent
+      const flatName = this.sharpToFlat[note];
+      if (flatName) {
+        this.noteFrequencies[flatName] = frequency;
+      }
     }
   }
 

@@ -12,19 +12,19 @@ export interface Chord {
 })
 export class MusicTheoryService {
 
-  private readonly notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-  private readonly sharpToFlat: { [key: string]: string } = {
-    'C#': 'D♭', 'D#': 'E♭', 'F#': 'G♭', 'G#': 'A♭', 'A#': 'B♭'
-  };
+  readonly notesSharp = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+  readonly notesFlat = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B'];
 
   constructor() { }
 
-  private getNoteName(index: number): string {
-    return this.notes[index % 12];
+  getNoteName(index: number, useFlats: boolean): string {
+    const notes = useFlats ? this.notesFlat : this.notesSharp;
+    return notes[index % 12];
   }
 
-  generateHarmonicField(rootNote: string, mode: 'major' | 'minor'): Chord[] {
-    const rootIndex = this.notes.indexOf(rootNote.split('/')[0]);
+  generateHarmonicField(rootNote: string, mode: 'major' | 'minor', useFlats: boolean): Chord[] {
+    const notes = useFlats ? this.notesFlat : this.notesSharp;
+    const rootIndex = notes.indexOf(rootNote.split('/')[0]);
     if (rootIndex === -1) {
       return [];
     }
@@ -56,10 +56,10 @@ export class MusicTheoryService {
       const fifthIndex = scaleNotes[(i + 4) % 7];
       const seventhIndex = scaleNotes[(i + 6) % 7];
 
-      const chordRootNote = this.getNoteName(chordRootIndex);
-      const thirdNote = this.getNoteName(thirdIndex);
-      const fifthNote = this.getNoteName(fifthIndex);
-      const seventhNote = this.getNoteName(seventhIndex);
+      const chordRootNote = this.getNoteName(chordRootIndex, useFlats);
+      const thirdNote = this.getNoteName(thirdIndex, useFlats);
+      const fifthNote = this.getNoteName(fifthIndex, useFlats);
+      const seventhNote = this.getNoteName(seventhIndex, useFlats);
 
       let chordType: Chord['type'] = 'major';
       if (chordQualities[i].includes('m7b5')) {
@@ -72,7 +72,7 @@ export class MusicTheoryService {
 
       harmonicField.push({
         degree: romanNumerals[i],
-        name: `${chordRootNote}${chordQualities[i]}`,
+        name: `${chordRootNote}${chordQualities[i]} `,
         notes: `${chordRootNote} - ${thirdNote} - ${fifthNote} - ${seventhNote}`,
         type: chordType
       });

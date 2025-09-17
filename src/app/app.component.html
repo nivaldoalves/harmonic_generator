@@ -19,6 +19,16 @@
         </mat-form-field>
 
         <mat-button-toggle-group
+          [(ngModel)]="useFlats"
+          (ngModelChange)="onAccidentalChange()"
+          name="accidentals"
+          aria-label="Acidentes Musicais"
+        >
+          <mat-button-toggle [value]="false">#</mat-button-toggle>
+          <mat-button-toggle [value]="true">b</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <mat-button-toggle-group
           [(ngModel)]="selectedMode"
           name="tonalidade"
           aria-label="Tonalidade"

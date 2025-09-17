@@ -4,6 +4,7 @@ import { AudioService } from '../audio.service';
 // Interface for a single piano key
 export interface PianoKey {
   name: string;       // e.g., 'C', 'C#'
+  altName?: string;    // e.g., 'D♭'
   type: 'white' | 'black';
   x: number;          // X position for SVG rendering
   width: number;
@@ -26,6 +27,10 @@ export class PianoComponent implements OnChanges {
   // SVG viewbox dimensions
   viewBoxWidth = 245;
   viewBoxHeight = 120;
+
+  private readonly sharpToFlat: { [key: string]: string } = {
+    'C#': 'D♭', 'D#': 'E♭', 'F#': 'G♭', 'G#': 'A♭', 'A#': 'B♭'
+  };
 
   constructor(private audioService: AudioService) {
     this.buildPianoKeys();
@@ -61,8 +66,10 @@ export class PianoComponent implements OnChanges {
     for (let i = 0; i < whiteKeys.length - 1; i++) {
       const keyName = whiteKeys[i];
       if (blackKeys[keyName]) {
+        const sharpName = blackKeys[keyName];
         this.keys.push({
-          name: blackKeys[keyName],
+          name: sharpName,
+          altName: this.sharpToFlat[sharpName],
           type: 'black',
           x: (i + 1) * whiteKeyWidth - (blackKeyWidth / 2),
           width: blackKeyWidth,
@@ -81,7 +88,7 @@ export class PianoComponent implements OnChanges {
       this.keys.forEach(key => {
         // Check if the key's name is in the highlight list
         // Handles both sharp (C#) and flat (Db) names
-        if (this.notesToHighlight.includes(key.name)) {
+        if (this.notesToHighlight.includes(key.name) || (key.altName && this.notesToHighlight.includes(key.altName))) {
           key.isHighlighted = true;
         }
       });

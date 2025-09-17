@@ -10,12 +10,10 @@ import { AudioService } from './audio.service';
   styleUrls: ['./app.component.scss']
 })
 export class App implements OnInit {
-  // Static data
-  notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-
   // State for Harmonic Field
   selectedNote: string = 'C';
   selectedMode: 'major' | 'minor' = 'major';
+  useFlats: boolean = false;
   harmonicField: Chord[] = [];
 
   // State for Current Progression
@@ -32,7 +30,7 @@ export class App implements OnInit {
   currentChordIndex = 0;
 
   constructor(
-    private musicTheoryService: MusicTheoryService,
+    public musicTheoryService: MusicTheoryService,
     private storageService: StorageService,
     private audioService: AudioService
   ) {}
@@ -42,10 +40,21 @@ export class App implements OnInit {
     this.generateHarmonicField();
   }
 
+  get notes(): string[] {
+    return this.useFlats ? this.musicTheoryService.notesFlat : this.musicTheoryService.notesSharp;
+  }
+
+  onAccidentalChange() {
+    if (!this.notes.includes(this.selectedNote)) {
+      this.selectedNote = 'C';
+    }
+    this.generateHarmonicField();
+  }
+
   // --- Harmonic Field Logic ---
   generateHarmonicField() {
     const rootNote = this.selectedNote.split('/')[0];
-    this.harmonicField = this.musicTheoryService.generateHarmonicField(rootNote, this.selectedMode);
+    this.harmonicField = this.musicTheoryService.generateHarmonicField(rootNote, this.selectedMode, this.useFlats);
     this.clearCurrentProgression();
   }
 
@@ -120,7 +129,7 @@ export class App implements OnInit {
     }
   }
 
-  // --- Utility --- 
+  // --- Utility ---
   // This is for the template to be able to show the saved progression chords
   formatProgression(prog: Chord[]): string {
     return prog.map(c => c.name).join(' - ');
