@@ -15,11 +15,13 @@ export class App implements OnInit {
   selectedMode: 'major' | 'minor' = 'major';
   useFlats: boolean = false;
   harmonicField: Chord[] = [];
+  scaleNotes: string[] = [];
 
   // State for Current Progression
   progressionLength: number = 4;
   progression: Chord[] = [];
   selectedChordNotes: string[] = [];
+  selectedChordName: string = '';
 
   // State for Saved Progressions
   savedProgressions: Chord[][] = [];
@@ -55,6 +57,7 @@ export class App implements OnInit {
   generateHarmonicField() {
     const rootNote = this.selectedNote.split('/')[0];
     this.harmonicField = this.musicTheoryService.generateHarmonicField(rootNote, this.selectedMode, this.useFlats);
+    this.scaleNotes = this.musicTheoryService.getScaleNotes(rootNote, this.selectedMode, this.useFlats);
     this.clearCurrentProgression();
   }
 
@@ -86,6 +89,7 @@ export class App implements OnInit {
 
   // --- Piano Logic ---
   selectChordForPiano(chord: Chord) {
+    this.selectedChordName = chord.name;
     const notes = chord.notes.split(' - ');
     const allNotes: string[] = [];
     notes.forEach(note => {
@@ -100,6 +104,10 @@ export class App implements OnInit {
   playChord(chord: Chord) {
     const notes = chord.notes.split(' - ');
     this.audioService.playChord(notes);
+  }
+
+  playNote(note: string) {
+    this.audioService.playNote(note);
   }
 
   playProgression() {

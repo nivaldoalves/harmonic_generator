@@ -11,14 +11,13 @@
       [class.highlighted]="key.isHighlighted"
     />
     <text
-      *ngIf="key.type === 'white' && key.isHighlighted"
+      *ngIf="key.type === 'white'"
       [attr.x]="key.x + key.width / 2"
       [attr.y]="viewBoxHeight - 10"
       class="key-name white-key-name"
     >
-      {{ key.name }}
-    </text>
-  </g>
+      {{ key.displayName }}
+    </text>  </g>
 
   <!-- Black Keys (rendered second to appear on top) -->
   <g *ngFor="let key of keys" (click)="onKeyClick(key)">
@@ -32,12 +31,12 @@
       [class.highlighted]="key.isHighlighted"
     />
     <text
-      *ngIf="key.type === 'black' && key.isHighlighted"
+      *ngIf="key.type === 'black'"
       [attr.x]="key.x + key.width / 2"
       [attr.y]="viewBoxHeight * 0.6 - 10"
       class="key-name black-key-name"
     >
-      {{ key.name }}
+      {{ key.displayName }}
     </text>
   </g>
 </svg>

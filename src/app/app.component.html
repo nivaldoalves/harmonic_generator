@@ -69,6 +69,28 @@
         </div>
       </mat-card-content>
     </mat-card>
+
+    <!-- Seção da Escala -->
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Escala de {{ selectedNote.split('/')[0] }} {{ selectedMode === 'major' ? 'Maior' : 'Menor' }}</mat-card-title>
+        <mat-card-subtitle>Clique em uma nota para ouvir</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="scaleNotes.length === 0" class="placeholder">
+          Gere um campo harmônico para ver a escala.
+        </div>
+        <div class="scale-display">
+          <span
+            *ngFor="let note of scaleNotes"
+            class="scale-note"
+            (click)="playNote(note)"
+          >
+            {{ note }}
+          </span>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <!-- Coluna da Direita: Progressões e Visualização -->
@@ -156,9 +178,10 @@
     <mat-card class="card">
       <mat-card-header>
         <mat-card-title>Visualização do Acorde</mat-card-title>
+        <mat-card-subtitle>{{ selectedChordName }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content class="piano-container">
-        <app-piano [notesToHighlight]="selectedChordNotes"></app-piano>
+        <app-piano [notesToHighlight]="selectedChordNotes" [useFlats]="useFlats"></app-piano>
       </mat-card-content>
     </mat-card>
   </div>

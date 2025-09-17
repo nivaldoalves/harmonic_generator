@@ -80,4 +80,25 @@ export class MusicTheoryService {
 
     return harmonicField;
   }
+
+  getScaleNotes(rootNote: string, mode: 'major' | 'minor', useFlats: boolean): string[] {
+    const notes = useFlats ? this.notesFlat : this.notesSharp;
+    const rootIndex = notes.indexOf(rootNote.split('/')[0]);
+    if (rootIndex === -1) {
+      return [];
+    }
+
+    const majorScaleIntervals = [2, 2, 1, 2, 2, 2, 1];
+    const minorScaleIntervals = [2, 1, 2, 2, 1, 2, 2];
+    const intervals = mode === 'major' ? majorScaleIntervals : minorScaleIntervals;
+
+    const scaleNoteIndices: number[] = [rootIndex];
+    let currentNoteIndex = rootIndex;
+    for (let i = 0; i < 6; i++) {
+      currentNoteIndex += intervals[i];
+      scaleNoteIndices.push(currentNoteIndex);
+    }
+
+    return scaleNoteIndices.map(index => this.getNoteName(index, useFlats));
+  }
 }

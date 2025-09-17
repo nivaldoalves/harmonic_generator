@@ -5,6 +5,7 @@ import { AudioService } from '../audio.service';
 export interface PianoKey {
   name: string;       // e.g., 'C', 'C#'
   altName?: string;    // e.g., 'D♭'
+  displayName: string; // The name to be displayed on the key
   type: 'white' | 'black';
   x: number;          // X position for SVG rendering
   width: number;
@@ -20,6 +21,7 @@ export interface PianoKey {
 export class PianoComponent implements OnChanges {
   // Input property to receive notes from the parent component
   @Input() notesToHighlight: string[] = [];
+  @Input() useFlats: boolean = false;
 
   // Array representing the piano keys for one octave
   keys: PianoKey[] = [];
@@ -38,6 +40,7 @@ export class PianoComponent implements OnChanges {
 
   // This lifecycle hook detects when the input property changes
   ngOnChanges() {
+    this.updateKeyNames();
     this.updateHighlightedKeys();
   }
 
@@ -55,6 +58,7 @@ export class PianoComponent implements OnChanges {
     for (let i = 0; i < whiteKeys.length; i++) {
       this.keys.push({
         name: whiteKeys[i],
+        displayName: whiteKeys[i],
         type: 'white',
         x: i * whiteKeyWidth,
         width: whiteKeyWidth,
@@ -70,6 +74,7 @@ export class PianoComponent implements OnChanges {
         this.keys.push({
           name: sharpName,
           altName: this.sharpToFlat[sharpName],
+          displayName: this.useFlats ? this.sharpToFlat[sharpName] : sharpName,
           type: 'black',
           x: (i + 1) * whiteKeyWidth - (blackKeyWidth / 2),
           width: blackKeyWidth,
@@ -77,6 +82,14 @@ export class PianoComponent implements OnChanges {
         });
       }
     }
+  }
+
+  private updateKeyNames() {
+    this.keys.forEach(key => {
+      if (key.type === 'black') {
+        key.displayName = this.useFlats ? key.altName! : key.name;
+      }
+    });
   }
 
   private updateHighlightedKeys() {
