@@ -110,24 +110,36 @@ mat-slider {
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
-  padding-top: 16px;
+}
+
+.scale-note-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scale-degree {
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #666;
 }
 
 .scale-note {
-  cursor: pointer;
-  padding: 12px 16px;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  transition: background-color 0.2s, transform 0.1s;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 
   &:hover {
-    background-color: #e0e0e0;
+    background-color: #f0f0f0;
   }
+}
 
-  &:active {
-    transform: scale(0.95);
-  }
+.chord-visualization-name {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 8px;
 }
 
 .progression-controls {

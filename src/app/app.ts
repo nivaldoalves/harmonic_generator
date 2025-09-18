@@ -3,11 +3,16 @@ import { MusicTheoryService, Chord } from './music-theory';
 import { StorageService } from './storage';
 import { AudioService } from './audio.service';
 
+interface NoteWithDegree {
+  note: string;
+  degree: string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: false,
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class App implements OnInit {
   // State for Harmonic Field
@@ -16,6 +21,7 @@ export class App implements OnInit {
   useFlats: boolean = false;
   harmonicField: Chord[] = [];
   scaleNotes: string[] = [];
+  scaleNotesWithDegrees: NoteWithDegree[] = [];
 
   // State for Current Progression
   progressionLength: number = 4;
@@ -43,7 +49,9 @@ export class App implements OnInit {
   }
 
   get notes(): string[] {
-    return this.useFlats ? this.musicTheoryService.notesFlat : this.musicTheoryService.notesSharp;
+    return this.useFlats
+      ? this.musicTheoryService.notesFlat
+      : this.musicTheoryService.notesSharp;
   }
 
   onAccidentalChange() {
@@ -56,8 +64,21 @@ export class App implements OnInit {
   // --- Harmonic Field Logic ---
   generateHarmonicField() {
     const rootNote = this.selectedNote.split('/')[0];
-    this.harmonicField = this.musicTheoryService.generateHarmonicField(rootNote, this.selectedMode, this.useFlats);
-    this.scaleNotes = this.musicTheoryService.getScaleNotes(rootNote, this.selectedMode, this.useFlats);
+    this.harmonicField = this.musicTheoryService.generateHarmonicField(
+      rootNote,
+      this.selectedMode,
+      this.useFlats
+    );
+    this.scaleNotes = this.musicTheoryService.getScaleNotes(
+      rootNote,
+      this.selectedMode,
+      this.useFlats
+    );
+    const degrees = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+    this.scaleNotesWithDegrees = this.scaleNotes.map((note, index) => ({
+      note,
+      degree: degrees[index],
+    }));
     this.clearCurrentProgression();
   }
 
@@ -80,7 +101,9 @@ export class App implements OnInit {
 
   // --- Saved Progressions Logic ---
   saveCurrentProgression() {
-    this.savedProgressions = this.storageService.saveProgression(this.progression);
+    this.savedProgressions = this.storageService.saveProgression(
+      this.progression
+    );
   }
 
   deleteSavedProgression(index: number) {
@@ -92,7 +115,7 @@ export class App implements OnInit {
     this.selectedChordName = chord.name;
     const notes = chord.notes.split(' - ');
     const allNotes: string[] = [];
-    notes.forEach(note => {
+    notes.forEach((note) => {
       const variants = note.split('/');
       allNotes.push(...variants);
     });
@@ -140,6 +163,6 @@ export class App implements OnInit {
   // --- Utility ---
   // This is for the template to be able to show the saved progression chords
   formatProgression(prog: Chord[]): string {
-    return prog.map(c => c.name).join(' - ');
+    return prog.map((c) => c.name).join(' - ');
   }
 }

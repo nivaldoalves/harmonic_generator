@@ -81,13 +81,15 @@
           Gere um campo harmônico para ver a escala.
         </div>
         <div class="scale-display">
-          <span
-            *ngFor="let note of scaleNotes"
-            class="scale-note"
-            (click)="playNote(note)"
+          <div
+            *ngFor="let note of scaleNotesWithDegrees"
+            class="scale-note-container"
           >
-            {{ note }}
-          </span>
+            <span class="scale-degree">{{ note.degree }}</span>
+            <span class="scale-note" (click)="playNote(note.note)">
+              {{ note.note }}
+            </span>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>
@@ -178,7 +180,7 @@
     <mat-card class="card">
       <mat-card-header>
         <mat-card-title>Visualização do Acorde</mat-card-title>
-        <mat-card-subtitle>{{ selectedChordName }}</mat-card-subtitle>
+        <mat-card-subtitle class="chord-visualization-name">{{ selectedChordName }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content class="piano-container">
         <app-piano [notesToHighlight]="selectedChordNotes" [useFlats]="useFlats"></app-piano>

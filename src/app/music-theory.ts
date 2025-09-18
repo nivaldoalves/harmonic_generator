@@ -44,8 +44,8 @@ export class MusicTheoryService {
     const minorChordQualities = ['m7', 'm7b5', 'maj7', 'm7', 'm7', 'maj7', '7'];
     const chordQualities = mode === 'major' ? majorChordQualities : minorChordQualities;
     
-    const romanNumeralsMajor = ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii°'];
-    const romanNumeralsMinor = ['i', 'ii°', 'III', 'iv', 'v', 'VI', 'VII'];
+    const romanNumeralsMajor = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+    const romanNumeralsMinor = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
     const romanNumerals = mode === 'major' ? romanNumeralsMajor : romanNumeralsMinor;
 
     const harmonicField: Chord[] = [];
@@ -72,7 +72,7 @@ export class MusicTheoryService {
 
       harmonicField.push({
         degree: romanNumerals[i],
-        name: `${chordRootNote}${chordQualities[i]} `,
+        name: `${chordRootNote}${chordQualities[i].replace('maj', '')} `,
         notes: `${chordRootNote} - ${thirdNote} - ${fifthNote} - ${seventhNote}`,
         type: chordType
       });
