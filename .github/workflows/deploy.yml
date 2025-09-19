@@ -22,7 +22,7 @@ jobs:
         run: npm ci
 
       - name: Build 🔨
-        run: ng build --configuration production --base-href "/harmonic_generator/"
+        run: npx ng build --configuration production --base-href "/harmonic_generator/"
 
       - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v4
