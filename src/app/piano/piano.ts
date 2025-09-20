@@ -51,6 +51,7 @@ export class PianoComponent implements OnChanges {
   private buildPianoKeys() {
     const whiteKeyWidth = 35;
     const blackKeyWidth = 20;
+    const keySpacing = 1; // Spacing between keys
     const whiteKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
     const blackKeys: { [key: string]: string } = { 'C': 'C#', 'D': 'D#', 'F': 'F#', 'G': 'G#', 'A': 'A#' };
 
@@ -61,7 +62,7 @@ export class PianoComponent implements OnChanges {
         displayName: whiteKeys[i],
         type: 'white',
         x: i * whiteKeyWidth,
-        width: whiteKeyWidth,
+        width: whiteKeyWidth - keySpacing,
         isHighlighted: false
       });
     }
