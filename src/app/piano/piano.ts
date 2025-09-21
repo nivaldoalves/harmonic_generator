@@ -10,6 +10,7 @@ export interface PianoKey {
   x: number;          // X position for SVG rendering
   width: number;
   isHighlighted: boolean;
+  octave: number; // Add octave property
 }
 
 @Component({
@@ -27,7 +28,7 @@ export class PianoComponent implements OnChanges {
   keys: PianoKey[] = [];
   
   // SVG viewbox dimensions
-  viewBoxWidth = 245;
+  viewBoxWidth = 490; // Adjusted for 14 white keys (2 octaves)
   viewBoxHeight = 120;
 
   private readonly sharpToFlat: { [key: string]: string } = {
@@ -45,41 +46,45 @@ export class PianoComponent implements OnChanges {
   }
 
   onKeyClick(key: PianoKey) {
-    this.audioService.playNote(key.name);
+    this.audioService.playNote(key.name, key.octave);
   }
 
   private buildPianoKeys() {
     const whiteKeyWidth = 35;
     const blackKeyWidth = 20;
     const keySpacing = 1; // Spacing between keys
-    const whiteKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
-    const blackKeys: { [key: string]: string } = { 'C': 'C#', 'D': 'D#', 'F': 'F#', 'G': 'G#', 'A': 'A#' };
+    const whiteKeyNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+    const blackKeyNotes: { [key: string]: string } = { 'C': 'C#', 'D': 'D#', 'F': 'F#', 'G': 'G#', 'A': 'A#' };
 
-    // Create white keys
-    for (let i = 0; i < whiteKeys.length; i++) {
-      this.keys.push({
-        name: whiteKeys[i],
-        displayName: whiteKeys[i],
-        type: 'white',
-        x: i * whiteKeyWidth,
-        width: whiteKeyWidth - keySpacing,
-        isHighlighted: false
-      });
-    }
+    for (let octave = 0; octave < 2; octave++) {
+      // Create white keys
+      for (let i = 0; i < whiteKeyNotes.length; i++) {
+        this.keys.push({
+          name: whiteKeyNotes[i],
+          displayName: whiteKeyNotes[i],
+          type: 'white',
+          x: (i + octave * 7) * whiteKeyWidth,
+          width: whiteKeyWidth - keySpacing,
+          isHighlighted: false,
+          octave: 4 + octave
+        });
+      }
 
-    // Create black keys
-    for (let i = 0; i < whiteKeys.length - 1; i++) {
-      const keyName = whiteKeys[i];
-      if (blackKeys[keyName]) {
-        const sharpName = blackKeys[keyName];
+      // Create black keys
+      for (let i = 0; i < whiteKeyNotes.length - 1; i++) {
+        const keyName = whiteKeyNotes[i];
+        if (keyName === 'E' || keyName === 'B') continue; // No black key after E or B
+
+        const sharpName = blackKeyNotes[keyName];
         this.keys.push({
           name: sharpName,
           altName: this.sharpToFlat[sharpName],
           displayName: this.useFlats ? this.sharpToFlat[sharpName] : sharpName,
           type: 'black',
-          x: (i + 1) * whiteKeyWidth - (blackKeyWidth / 2),
+          x: (i + octave * 7 + 1) * whiteKeyWidth - (blackKeyWidth / 2),
           width: blackKeyWidth,
-          isHighlighted: false
+          isHighlighted: false,
+          octave: 4 + octave
         });
       }
     }
@@ -99,11 +104,17 @@ export class PianoComponent implements OnChanges {
 
     // Then, set highlights for the new notes
     if (this.notesToHighlight && this.notesToHighlight.length > 0) {
-      this.keys.forEach(key => {
-        // Check if the key's name is in the highlight list
-        // Handles both sharp (C#) and flat (Db) names
-        if (this.notesToHighlight.includes(key.name) || (key.altName && this.notesToHighlight.includes(key.altName))) {
-          key.isHighlighted = true;
+      this.notesToHighlight.forEach(noteToHighlight => {
+        const parts = noteToHighlight.split('/');
+        const noteName = parts[0];
+        const octave = parts.length > 1 ? parseInt(parts[1], 10) : 4; // Default to octave 4
+
+        const keyToHighlight = this.keys.find(key => 
+          (key.name === noteName || key.altName === noteName) && key.octave === octave
+        );
+
+        if (keyToHighlight) {
+          keyToHighlight.isHighlighted = true;
         }
       });
     }

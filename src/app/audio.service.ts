@@ -74,18 +74,19 @@ export class AudioService {
 
   playChord(notes: string[]) {
     const now = this.audioContext.currentTime;
-    notes.forEach((noteName, index) => {
-      const note = noteName.split('/')[0];
+    notes.forEach(noteName => {
+      const parts = noteName.split('/');
+      const note = parts[0];
+      const octave = parts.length > 1 ? parseInt(parts[1], 10) : 4; // Default to octave 4
       const frequency = this.noteFrequencies[note];
-      const octave = (index >= 2) ? 5 : 4; // Play 5th and 7th notes one octave higher
       this.playNoteInternal(frequency, now, octave);
     });
   }
 
-  playNote(noteName: string) {
+  playNote(noteName: string, octave: number = 4) {
     const now = this.audioContext.currentTime;
     const note = noteName.split('/')[0];
     const frequency = this.noteFrequencies[note];
-    this.playNoteInternal(frequency, now, 4); // Base octave for single notes
+    this.playNoteInternal(frequency, now, octave);
   }
 }

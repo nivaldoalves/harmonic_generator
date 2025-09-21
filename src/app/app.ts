@@ -6,6 +6,7 @@ import { AudioService } from './audio.service';
 interface NoteWithDegree {
   note: string;
   degree: string;
+  displayName: string;
 }
 
 @Component({
@@ -74,10 +75,11 @@ export class App implements OnInit {
       this.selectedMode,
       this.useFlats
     );
-    const degrees = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+    const degrees = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
     this.scaleNotesWithDegrees = this.scaleNotes.map((note, index) => ({
       note,
       degree: degrees[index],
+      displayName: note.split('/')[0]
     }));
     this.clearCurrentProgression();
   }
@@ -113,13 +115,7 @@ export class App implements OnInit {
   // --- Piano Logic ---
   selectChordForPiano(chord: Chord) {
     this.selectedChordName = chord.name;
-    const notes = chord.notes.split(' - ');
-    const allNotes: string[] = [];
-    notes.forEach((note) => {
-      const variants = note.split('/');
-      allNotes.push(...variants);
-    });
-    this.selectedChordNotes = allNotes;
+    this.selectedChordNotes = chord.notes.split(' - ');
     this.playChord(chord);
   }
 
@@ -130,7 +126,10 @@ export class App implements OnInit {
   }
 
   playNote(note: string) {
-    this.audioService.playNote(note);
+    const parts = note.split('/');
+    const noteName = parts[0];
+    const octave = parts.length > 1 ? parseInt(parts[1], 10) : 4;
+    this.audioService.playNote(noteName, octave);
   }
 
   playProgression() {

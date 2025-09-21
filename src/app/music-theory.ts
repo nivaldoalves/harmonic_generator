@@ -56,10 +56,15 @@ export class MusicTheoryService {
       const fifthIndex = scaleNotes[(i + 4) % 7];
       const seventhIndex = scaleNotes[(i + 6) % 7];
 
-      const chordRootNote = this.getNoteName(chordRootIndex, useFlats);
-      const thirdNote = this.getNoteName(thirdIndex, useFlats);
-      const fifthNote = this.getNoteName(fifthIndex, useFlats);
-      const seventhNote = this.getNoteName(seventhIndex, useFlats);
+      const chordRootOctave = 4 + Math.floor(chordRootIndex / 12);
+      const thirdOctave = 4 + Math.floor(thirdIndex / 12);
+      const fifthOctave = 4 + Math.floor(fifthIndex / 12);
+      const seventhOctave = 4 + Math.floor(seventhIndex / 12);
+
+      const chordRootNote = `${this.getNoteName(chordRootIndex, useFlats)}/${chordRootOctave}`;
+      const thirdNote = `${this.getNoteName(thirdIndex, useFlats)}/${thirdOctave}`;
+      const fifthNote = `${this.getNoteName(fifthIndex, useFlats)}/${fifthOctave}`;
+      const seventhNote = `${this.getNoteName(seventhIndex, useFlats)}/${seventhOctave}`;
 
       let chordType: Chord['type'] = 'major';
       if (chordQualities[i].includes('m7b5')) {
@@ -72,7 +77,7 @@ export class MusicTheoryService {
 
       harmonicField.push({
         degree: romanNumerals[i],
-        name: `${chordRootNote}${chordQualities[i].replace('maj', '')} `,
+        name: `${this.getNoteName(chordRootIndex, useFlats)}${chordQualities[i].replace('maj', '')} `,
         notes: `${chordRootNote} - ${thirdNote} - ${fifthNote} - ${seventhNote}`,
         type: chordType
       });
@@ -99,6 +104,15 @@ export class MusicTheoryService {
       scaleNoteIndices.push(currentNoteIndex);
     }
 
-    return scaleNoteIndices.map(index => this.getNoteName(index, useFlats));
+    const scaleWithOctaves = scaleNoteIndices.map(index => {
+      const octave = 4 + Math.floor(index / 12);
+      return `${this.getNoteName(index, useFlats)}/${octave}`;
+    });
+
+    const octaveRootIndex = rootIndex + 12;
+    const octaveRootOctave = 4 + Math.floor(octaveRootIndex / 12);
+    scaleWithOctaves.push(`${this.getNoteName(octaveRootIndex, useFlats)}/${octaveRootOctave}`);
+
+    return scaleWithOctaves;
   }
 }

@@ -1,9 +1,13 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 svg {
   width: 100%;
-  height: auto;
-  max-width: 400px; /* Match card width */
   display: block;
-  margin: 0 auto;
 }
 
 .white-key {
