@@ -2,181 +2,185 @@
   <span>Gerador de Campo Harmônico</span>
 </mat-toolbar>
 
-<div class="container">
-  <!-- Coluna da Esquerda: Geração -->
-  <div class="column">
-    <!-- Seção de Controles -->
-    <mat-card class="card">
-      <mat-card-header>
-        <mat-card-title>1. Defina a Tonalidade</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="controls-container">
-        <mat-form-field appearance="fill">
-          <mat-label>Nota Raiz</mat-label>
-          <mat-select [(ngModel)]="selectedNote">
-            <mat-option *ngFor="let note of notes" [value]="note">{{ note }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+<div class="main-container">
+  <div class="top-section">
+    <!-- Coluna da Esquerda: Geração -->
+    <div class="column left-column">
+      <!-- Seção de Controles -->
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>1. Defina a Tonalidade</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="controls-container">
+          <mat-form-field appearance="fill">
+            <mat-label>Nota Raiz</mat-label>
+            <mat-select [(ngModel)]="selectedNote">
+              <mat-option *ngFor="let note of notes" [value]="note">{{ note }}</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-button-toggle-group
-          [(ngModel)]="useFlats"
-          (ngModelChange)="onAccidentalChange()"
-          name="accidentals"
-          aria-label="Acidentes Musicais"
-        >
-          <mat-button-toggle [value]="false">#</mat-button-toggle>
-          <mat-button-toggle [value]="true">b</mat-button-toggle>
-        </mat-button-toggle-group>
-
-        <mat-button-toggle-group
-          [(ngModel)]="selectedMode"
-          name="tonalidade"
-          aria-label="Tonalidade"
-        >
-          <mat-button-toggle value="major">Maior</mat-button-toggle>
-          <mat-button-toggle value="minor">Menor</mat-button-toggle>
-        </mat-button-toggle-group>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="generateHarmonicField()">
-          Gerar Campo Harmônico
-        </button>
-      </mat-card-actions>
-    </mat-card>
-
-    <!-- Seção do Campo Harmônico -->
-    <mat-card class="card">
-      <mat-card-header>
-        <mat-card-title
-          >2. Campo Harmônico de {{ selectedNote.split('/')[0] }}
-          {{ selectedMode === 'major' ? 'Maior' : 'Menor' }}</mat-card-title
-        >
-        <mat-card-subtitle>Clique em um acorde para visualizar</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div *ngIf="harmonicField.length === 0" class="placeholder">
-          Gere um campo harmônico primeiro.
-        </div>
-        <div
-          *ngFor="let chord of harmonicField"
-          class="chord-display"
-          [ngClass]="chord.type"
-          (click)="selectChordForPiano(chord)"
-          style="cursor: pointer"
-        >
-          <span class="chord-name">{{ chord.degree }}: {{ chord.name }}</span>
-          <span class="chord-notes">{{ chord.notes }}</span>
-        </div>
-      </mat-card-content>
-    </mat-card>
-
-    <!-- Seção da Escala -->
-    <mat-card class="card">
-      <mat-card-header>
-        <mat-card-title>Escala de {{ selectedNote.split('/')[0] }} {{ selectedMode === 'major' ? 'Maior' : 'Menor' }}</mat-card-title>
-        <mat-card-subtitle>Clique em uma nota para ouvir</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div *ngIf="scaleNotes.length === 0" class="placeholder">
-          Gere um campo harmônico para ver a escala.
-        </div>
-        <div class="scale-display">
-          <div
-            *ngFor="let note of scaleNotesWithDegrees"
-            class="scale-note-container"
+          <mat-button-toggle-group
+            [(ngModel)]="useFlats"
+            (ngModelChange)="onAccidentalChange()"
+            name="accidentals"
+            aria-label="Acidentes Musicais"
           >
-            <span class="scale-degree">{{ note.degree }}</span>
-            <span class="scale-note" (click)="playNote(note.note)">
-              {{ note.displayName }}
-            </span>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+            <mat-button-toggle [value]="false">#</mat-button-toggle>
+            <mat-button-toggle [value]="true">b</mat-button-toggle>
+          </mat-button-toggle-group>
 
-  <!-- Coluna da Direita: Progressões e Visualização -->
-  <div class="column">
-    <!-- Seção da Progressão -->
-    <mat-card class="card">
-      <mat-card-header>
-        <mat-card-title>3. Crie uma Progressão</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-label>Quantidade de Acordes: {{ progressionLength }}</mat-label>
-        <mat-slider min="4" max="16" step="1" discrete="true">
-          <input matSliderThumb [(ngModel)]="progressionLength" />
-        </mat-slider>
-        <div *ngIf="progression.length === 0" class="placeholder">
-          A progressão aleatória aparecerá aqui...
-        </div>
-        <div *ngIf="progression.length > 0" class="progression-display">
-          <span
-            *ngFor="let chord of progression; let i = index; let last = last"
+          <mat-button-toggle-group
+            [(ngModel)]="selectedMode"
+            name="tonalidade"
+            aria-label="Tonalidade"
+          >
+            <mat-button-toggle value="major">Maior</mat-button-toggle>
+            <mat-button-toggle value="minor">Menor</mat-button-toggle>
+          </mat-button-toggle-group>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="generateHarmonicField()">
+            Gerar Campo Harmônico
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- Seção do Campo Harmônico -->
+      <mat-card class="card harmonic-field-card">
+        <mat-card-header>
+          <mat-card-title
+            >2. Campo Harmônico de {{ selectedNote.split('/')[0] }}
+            {{ selectedMode === 'major' ? 'Maior' : 'Menor' }}</mat-card-title
+          >
+          <mat-card-subtitle>Clique em um acorde para visualizar</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="harmonicField.length === 0" class="placeholder">
+            Gere um campo harmônico primeiro.
+          </div>
+          <div
+            *ngFor="let chord of harmonicField"
+            class="chord-display"
+            [ngClass]="chord.type"
             (click)="selectChordForPiano(chord)"
             style="cursor: pointer"
-            class="progression-chord"
-            [class.playing]="isPlaying && i === currentChordIndex"
           >
-            {{ chord.name }}{{ !last ? ' - ' : '' }}
-          </span>
-        </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <div class="progression-controls">
-          <button mat-raised-button color="accent" (click)="generateRandomProgression()">
-            Gerar Progressão
-          </button>
-          <div class="playback-buttons">
-            <button mat-fab color="primary" (click)="playProgression()" [disabled]="progression.length === 0 || isPlaying" matTooltip="Play Progressão">
-              <mat-icon>play_arrow</mat-icon>
+            <span class="chord-name">{{ chord.degree }}: {{ chord.name }}</span>
+            <span class="chord-notes">{{ chord.notes }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Coluna da Direita: Progressões -->
+    <div class="column right-column">
+      <!-- Seção da Progressão -->
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>3. Crie uma Progressão</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-label>Quantidade de Acordes: {{ progressionLength }}</mat-label>
+          <mat-slider min="4" max="16" step="1" discrete="true">
+            <input matSliderThumb [(ngModel)]="progressionLength" />
+          </mat-slider>
+          <div *ngIf="progression.length === 0" class="placeholder">
+            A progressão aleatória aparecerá aqui...
+          </div>
+          <div *ngIf="progression.length > 0" class="progression-display">
+            <span
+              *ngFor="let chord of progression; let i = index; let last = last"
+              (click)="selectChordForPiano(chord)"
+              style="cursor: pointer"
+              class="progression-chord"
+              [class.playing]="isPlaying && i === currentChordIndex"
+            >
+              {{ chord.name }}{{ !last ? ' - ' : '' }}
+            </span>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="progression-controls">
+            <button mat-raised-button color="accent" (click)="generateRandomProgression()">
+              Gerar Progressão
             </button>
-            <button mat-fab color="warn" (click)="stopProgression()" [disabled]="!isPlaying" matTooltip="Stop Progressão">
-              <mat-icon>stop</mat-icon>
+            <div class="playback-buttons">
+              <button mat-fab color="primary" (click)="playProgression()" [disabled]="progression.length === 0 || isPlaying" matTooltip="Play Progressão">
+                <mat-icon>play_arrow</mat-icon>
+              </button>
+              <button mat-fab color="warn" (click)="stopProgression()" [disabled]="!isPlaying" matTooltip="Stop Progressão">
+                <mat-icon>stop</mat-icon>
+              </button>
+            </div>
+            <button mat-button (click)="saveCurrentProgression()" [disabled]="progression.length === 0">
+              Salvar
             </button>
           </div>
-          <button mat-button (click)="saveCurrentProgression()" [disabled]="progression.length === 0">
-            Salvar
-          </button>
-        </div>
-        <button
-          mat-button
-          color="warn"
-          (click)="clearCurrentProgression()"
-          [disabled]="progression.length === 0"
-        >
-          Excluir
-        </button>
-      </mat-card-actions>
-    </mat-card>
-
-    <!-- Seção de Progressões Salvas -->
-    <mat-card class="card">
-      <mat-card-header>
-        <mat-card-title>4. Progressões Salvas</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div *ngIf="savedProgressions.length === 0" class="placeholder">
-          Nenhuma progressão salva.
-        </div>
-        <div *ngFor="let saved of savedProgressions; let i = index" class="saved-progression-item">
-          <span class="saved-progression-text" (click)="progression = saved">
-            {{ formatProgression(saved) }}
-          </span>
           <button
-            mat-stroked-button
+            mat-button
             color="warn"
-            (click)="deleteSavedProgression(i)"
-            aria-label="Delete progression"
-            matTooltip="Excluir progressão"
+            (click)="clearCurrentProgression()"
+            [disabled]="progression.length === 0"
           >
             Excluir
           </button>
-        </div>
-      </mat-card-content>
-    </mat-card>
+        </mat-card-actions>
+      </mat-card>
 
-    <!-- Seção do Piano -->
+      <!-- Seção de Progressões Salvas -->
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>4. Progressões Salvas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="savedProgressions.length === 0" class="placeholder">
+            Nenhuma progressão salva.
+          </div>
+          <div *ngFor="let saved of savedProgressions; let i = index" class="saved-progression-item">
+            <span class="saved-progression-text" (click)="progression = saved">
+              {{ formatProgression(saved) }}
+            </span>
+            <button
+              mat-stroked-button
+              color="warn"
+              (click)="deleteSavedProgression(i)"
+              aria-label="Delete progression"
+              matTooltip="Excluir progressão"
+            >
+              Excluir
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Seção da Escala -->
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Escala de {{ selectedNote.split('/')[0] }} {{ selectedMode === 'major' ? 'Maior' : 'Menor' }}</mat-card-title>
+          <mat-card-subtitle>Clique em uma nota para ouvir</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="scaleNotes.length === 0" class="placeholder">
+            Gere um campo harmônico para ver a escala.
+          </div>
+          <div class="scale-display">
+            <div
+              *ngFor="let note of scaleNotesWithDegrees"
+              class="scale-note-container"
+            >
+              <span class="scale-degree">{{ note.degree }}</span>
+              <span class="scale-note" (click)="playNote(note.note)">
+                {{ note.displayName }}
+              </span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Seção Inferior: Visualização do Acorde -->
+  <div class="bottom-section">
     <mat-card class="card">
       <mat-card-header>
         <mat-card-title>Visualização do Acorde</mat-card-title>
