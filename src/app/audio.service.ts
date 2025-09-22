@@ -1,92 +1,94 @@
-
 import { Injectable } from '@angular/core';
+import * as Tone from 'tone';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AudioService {
-  private audioContext: AudioContext;
-  private readonly baseFrequency = 440; // A4
-  private readonly noteFrequencies: { [key: string]: number } = {};
-  private readonly sharpToFlat: { [key: string]: string } = {
-    'C#': 'D♭', 'D#': 'E♭', 'F#': 'G♭', 'G#': 'A♭', 'A#': 'B♭'
-  };
+  private sampler: Tone.Sampler;
+  private isLoaded = false;
 
   constructor() {
-    this.audioContext = new AudioContext();
-    this.generateNoteFrequencies();
+    this.sampler = new Tone.Sampler(
+      {
+        A0: 'A0.mp3',
+        C1: 'C1.mp3',
+        'D#1': 'Ds1.mp3',
+        'F#1': 'Fs1.mp3',
+        A1: 'A1.mp3',
+        C2: 'C2.mp3',
+        'D#2': 'Ds2.mp3',
+        'F#2': 'Fs2.mp3',
+        A2: 'A2.mp3',
+        C3: 'C3.mp3',
+        'D#3': 'Ds3.mp3',
+        'F#3': 'Fs3.mp3',
+        A3: 'A3.mp3',
+        C4: 'C4.mp3',
+        'D#4': 'Ds4.mp3',
+        'F#4': 'Fs4.mp3',
+        A4: 'A4.mp3',
+        C5: 'C5.mp3',
+        'D#5': 'Ds5.mp3',
+        'F#5': 'Fs5.mp3',
+        A5: 'A5.mp3',
+        C6: 'C6.mp3',
+        'D#6': 'Ds6.mp3',
+        'F#6': 'Fs6.mp3',
+        A6: 'A6.mp3',
+        C7: 'C7.mp3',
+        'D#7': 'Ds7.mp3',
+        'F#7': 'Fs7.mp3',
+        A7: 'A7.mp3',
+        C8: 'C8.mp3',
+      },
+      {
+        release: 1,
+        baseUrl: 'https://tonejs.github.io/audio/salamander/',
+        onload: () => {
+          this.isLoaded = true;
+        },
+      }
+    ).toDestination();
   }
 
-  private generateNoteFrequencies() {
-    const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-    for (let i = 0; i < 12; i++) {
-      const note = notes[i];
-      const frequency = this.baseFrequency * Math.pow(2, (i - 9) / 12);
-      this.noteFrequencies[note] = frequency;
-
-      // Add flat equivalent
-      const flatName = this.sharpToFlat[note];
-      if (flatName) {
-        this.noteFrequencies[flatName] = frequency;
-      }
+  private async ensureLoaded() {
+    if (Tone.context.state !== 'running') {
+      await Tone.start();
+    }
+    if (!this.isLoaded) {
+      // This is a fallback, but the onload callback should handle it.
+      await new Promise<void>((resolve) => {
+        const interval = setInterval(() => {
+          if (this.isLoaded) {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 100);
+      });
     }
   }
 
-  private playNoteInternal(frequency: number, startTime: number, octave: number) {
-    if (!frequency) return;
-
-    const adjustedFrequency = frequency * Math.pow(2, octave - 4);
-
-    const oscillator = this.audioContext.createOscillator();
-    const gainNode = this.audioContext.createGain();
-    const filter = this.audioContext.createBiquadFilter();
-
-    // --- Timbre (Waveform + Filter) ---
-    oscillator.type = 'sawtooth'; // Richer harmonic content
-    filter.type = 'lowpass'; // To soften the sawtooth wave
-    filter.frequency.value = 2000; // Cut off higher, harsh frequencies
-
-    // --- ADSR Envelope ---
-    const peakLevel = 0.4;
-    const sustainLevel = 0.2;
-    const attackTime = 0.02;
-    const decayTime = 0.1;
-    const duration = 0.5;
-
-    gainNode.gain.setValueAtTime(0, startTime);
-    // Attack
-    gainNode.gain.linearRampToValueAtTime(peakLevel, startTime + attackTime);
-    // Decay
-    gainNode.gain.linearRampToValueAtTime(sustainLevel, startTime + attackTime + decayTime);
-    // Release
-    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-
-    // --- Connections ---
-    oscillator.frequency.setValueAtTime(adjustedFrequency, startTime);
-    oscillator.connect(filter);
-    filter.connect(gainNode);
-    gainNode.connect(this.audioContext.destination);
-
-    // --- Playback ---
-    oscillator.start(startTime);
-    oscillator.stop(startTime + duration);
+  private formatNote(noteName: string, octave: number): string {
+    return `${noteName.replace('/', '')}${octave}`;
   }
 
-  playChord(notes: string[]) {
-    const now = this.audioContext.currentTime;
-    notes.forEach(noteName => {
+  async playChord(notes: string[]) {
+    await this.ensureLoaded();
+    const now = Tone.now();
+    const formattedNotes = notes.map((noteName) => {
       const parts = noteName.split('/');
       const note = parts[0];
-      const octave = parts.length > 1 ? parseInt(parts[1], 10) : 4; // Default to octave 4
-      const frequency = this.noteFrequencies[note];
-      this.playNoteInternal(frequency, now, octave);
+      const octave = parts.length > 1 ? parseInt(parts[1], 10) : 4;
+      return this.formatNote(note, octave);
     });
+    this.sampler.triggerAttackRelease(formattedNotes, '1n', now);
   }
 
-  playNote(noteName: string, octave: number = 4) {
-    const now = this.audioContext.currentTime;
-    const note = noteName.split('/')[0];
-    const frequency = this.noteFrequencies[note];
-    this.playNoteInternal(frequency, now, octave);
+  async playNote(noteName: string, octave: number = 4) {
+    await this.ensureLoaded();
+    const now = Tone.now();
+    const formattedNote = this.formatNote(noteName, octave);
+    this.sampler.triggerAttackRelease([formattedNote], '1n', now);
   }
 }
