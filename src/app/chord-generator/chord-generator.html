@@ -1,32 +1,90 @@
 <mat-card class="card">
   <mat-card-header>
-    <mat-card-title>3. Gerador de Acordes</mat-card-title>
+    <mat-card-title>Gerador de Acordes</mat-card-title>
   </mat-card-header>
   <mat-card-content class="controls-container">
-    <mat-form-field appearance="fill">
+    <!-- Seletor de Acidentes -->
+    <div class="custom-form-field">
+      <span class="custom-label">Acidentes</span>
+      <mat-button-toggle-group
+        [(ngModel)]="useFlats"
+        (ngModelChange)="onAccidentalChange()"
+        name="chordAccidentals"
+        aria-label="Acidentes Musicais para Acordes"
+      >
+        <mat-button-toggle [value]="false" class="toggle-button">#</mat-button-toggle>
+        <mat-button-toggle [value]="true" class="toggle-button">♭</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <!-- Seletor de Tônica -->
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Tônica</mat-label>
       <mat-select [(ngModel)]="selectedRoot">
         <mat-option *ngFor="let note of notes" [value]="note">{{ note }}</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <!-- Seletor de Tipo de Acorde -->
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Tipo de Acorde</mat-label>
       <mat-select [(ngModel)]="selectedChordType">
-        <mat-option *ngFor="let type of chordTypes" [value]="type.value">{{ type.name }}</mat-option>
+        <mat-option *ngFor="let type of chordTypes" [value]="type.value"
+          >{{ type.name }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <!-- Seletor de Inversão -->
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Inversão</mat-label>
       <mat-select [(ngModel)]="selectedInversion">
-        <mat-option *ngFor="let inversion of inversions" [value]="inversion.value">{{ inversion.name }}</mat-option>
+        <mat-option *ngFor="let inversion of inversions" [value]="inversion.value"
+          >{{ inversion.name }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="generateAndPlayChord()">
-      Ouvir Acorde
-    </button>
+    <button mat-raised-button color="accent" (click)="generateAndPlayChord()">Ouvir Acorde</button>
   </mat-card-actions>
 </mat-card>
+
+<style>
+  .full-width {
+    width: 100%;
+  }
+
+  .custom-form-field {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.04);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 20px 16px 8px 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+  }
+
+  .custom-label {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.6);
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+  }
+
+  .mat-button-toggle-group {
+    border: none;
+    width: 100%;
+    display: flex;
+    margin-top: 8px; /* Adiciona espaço entre o título e os botões */
+    border-radius: 4px; /* Arredonda os cantos do grupo */
+    overflow: hidden; /* Garante que os botões internos respeitem os cantos arredondados */
+  }
+
+  .toggle-button {
+    flex: 1;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  }
+</style>

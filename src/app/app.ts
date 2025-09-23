@@ -26,19 +26,14 @@ export class App implements OnInit {
   selectedChordNotes: string[] = [];
   selectedChordName: string = '';
 
-  constructor(
-    public musicTheoryService: MusicTheoryService,
-    private audioService: AudioService
-  ) {}
+  constructor(public musicTheoryService: MusicTheoryService, private audioService: AudioService) {}
 
   ngOnInit() {
     this.generateHarmonicField();
   }
 
   get notes(): string[] {
-    return this.useFlats
-      ? this.musicTheoryService.notesFlat
-      : this.musicTheoryService.notesSharp;
+    return this.useFlats ? this.musicTheoryService.notesFlat : this.musicTheoryService.notesSharp;
   }
 
   onAccidentalChange() {
@@ -65,14 +60,14 @@ export class App implements OnInit {
     this.scaleNotesWithDegrees = this.scaleNotes.map((note, index) => ({
       note,
       degree: degrees[index],
-      displayName: note.split('/')[0]
+      displayName: note.split('/')[0],
     }));
   }
 
   // --- Harmonic Field Logic ---
-  onChordGenerated(notes: string[]) {
-    this.selectedChordNotes = notes;
-    this.selectedChordName = 'Acorde Gerado'; // Or generate a more descriptive name
+  onChordGenerated(event: { name: string; notes: string[] }) {
+    this.selectedChordNotes = event.notes;
+    this.selectedChordName = event.name;
   }
 
   selectChordForPiano(chord: Chord) {
