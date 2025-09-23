@@ -31,9 +31,15 @@
 
 .controls-container {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 20px;
   flex-wrap: wrap;
+}
+
+.controls-container .mat-mdc-form-field {
+  /* Ajuste fino para alinhar o mat-form-field com os botões */
+  position: relative;
+  top: 5px;
 }
 
 .placeholder {
