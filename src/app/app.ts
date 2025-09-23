@@ -30,7 +30,8 @@ export class App implements OnInit {
   constructor(public musicTheoryService: MusicTheoryService, private audioService: AudioService) {}
 
   ngOnInit() {
-    this.generateHarmonicField();
+    // O campo harmônico não será mais gerado automaticamente na inicialização
+    // para permitir que o usuário defina a tonalidade primeiro.
   }
 
   get notes(): string[] {
