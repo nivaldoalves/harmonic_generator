@@ -25,6 +25,7 @@ export class App implements OnInit {
 
   selectedChordNotes: string[] = [];
   selectedChordName: string = '';
+  isHarmonicFieldLocked: boolean = false;
 
   constructor(public musicTheoryService: MusicTheoryService, private audioService: AudioService) {}
 
@@ -62,6 +63,15 @@ export class App implements OnInit {
       degree: degrees[index],
       displayName: note.split('/')[0],
     }));
+    this.isHarmonicFieldLocked = true;
+  }
+
+  resetHarmonicField() {
+    this.isHarmonicFieldLocked = false;
+    this.harmonicField = [];
+    this.scaleNotesWithDegrees = [];
+    this.selectedChordName = '';
+    this.selectedChordNotes = [];
   }
 
   // --- Harmonic Field Logic ---
