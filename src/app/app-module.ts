@@ -18,12 +18,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { PianoComponent } from './piano/piano';
 import { AudioService } from './audio.service';
+import { ChordGenerator } from './chord-generator/chord-generator';
 
 
 @NgModule({
   declarations: [
     App,
-    PianoComponent
+    PianoComponent,
+    ChordGenerator
   ],
   imports: [
     BrowserModule,

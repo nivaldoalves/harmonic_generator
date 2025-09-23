@@ -4,7 +4,7 @@ export interface Chord {
   degree: string;
   name: string;
   notes: string;
-  type: 'major' | 'minor' | 'dominant' | 'diminished';
+  type: 'major' | 'minor' | 'dominant' | 'diminished' | 'augmented' | 'sus2' | 'sus4' | 'dominant-seventh' | 'major-seventh' | 'minor-seventh';
 }
 
 @Injectable({
@@ -14,6 +14,18 @@ export class MusicTheoryService {
 
   readonly notesSharp = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
   readonly notesFlat = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B'];
+
+  private chordIntervals: { [key: string]: number[] } = {
+    'major': [0, 4, 7],
+    'minor': [0, 3, 7],
+    'augmented': [0, 4, 8],
+    'diminished': [0, 3, 6],
+    'sus2': [0, 2, 7],
+    'sus4': [0, 5, 7],
+    'dominant-seventh': [0, 4, 7, 10],
+    'major-seventh': [0, 4, 7, 11],
+    'minor-seventh': [0, 3, 7, 10],
+  };
 
   constructor() { }
 
@@ -114,5 +126,34 @@ export class MusicTheoryService {
     scaleWithOctaves.push(`${this.getNoteName(octaveRootIndex, useFlats)}/${octaveRootOctave}`);
 
     return scaleWithOctaves;
+  }
+
+  getChordNotes(root: string, type: string, inversion: number = 0, useFlats: boolean = false): string[] | null {
+    const rootIndex = (useFlats ? this.notesFlat : this.notesSharp).indexOf(root);
+    if (rootIndex === -1) {
+      return null;
+    }
+
+    const intervals = this.chordIntervals[type];
+    if (!intervals) {
+      return null;
+    }
+
+    let noteIndices = intervals.map(interval => rootIndex + interval);
+
+    // Apply inversion
+    for (let i = 0; i < inversion; i++) {
+      if (noteIndices.length > 0) {
+        const firstNote = noteIndices.shift();
+        if (firstNote !== undefined) {
+          noteIndices.push(firstNote + 12); // Move note up an octave
+        }
+      }
+    }
+
+    return noteIndices.map(noteIndex => {
+      const octave = 4 + Math.floor(noteIndex / 12);
+      return `${this.getNoteName(noteIndex, useFlats)}/${octave}`;
+    });
   }
 }

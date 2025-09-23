@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicTheoryService, Chord } from './music-theory';
-import { StorageService } from './storage';
 import { AudioService } from './audio.service';
 
 interface NoteWithDegree {
@@ -24,28 +23,15 @@ export class App implements OnInit {
   scaleNotes: string[] = [];
   scaleNotesWithDegrees: NoteWithDegree[] = [];
 
-  // State for Current Progression
-  progressionLength: number = 4;
-  progression: Chord[] = [];
   selectedChordNotes: string[] = [];
   selectedChordName: string = '';
 
-  // State for Saved Progressions
-  savedProgressions: Chord[][] = [];
-
-  // Playback State
-  isPlaying = false;
-  playbackInterval: any;
-  currentChordIndex = 0;
-
   constructor(
     public musicTheoryService: MusicTheoryService,
-    private storageService: StorageService,
     private audioService: AudioService
   ) {}
 
   ngOnInit() {
-    this.savedProgressions = this.storageService.getSavedProgressions();
     this.generateHarmonicField();
   }
 
@@ -81,38 +67,14 @@ export class App implements OnInit {
       degree: degrees[index],
       displayName: note.split('/')[0]
     }));
-    this.clearCurrentProgression();
   }
 
-  // --- Current Progression Logic ---
-  generateRandomProgression() {
-    if (this.harmonicField.length === 0) return;
-    const newProgression: Chord[] = [];
-    for (let i = 0; i < this.progressionLength; i++) {
-      const randomIndex = Math.floor(Math.random() * this.harmonicField.length);
-      newProgression.push(this.harmonicField[randomIndex]);
-    }
-    this.progression = newProgression;
+  // --- Harmonic Field Logic ---
+  onChordGenerated(notes: string[]) {
+    this.selectedChordNotes = notes;
+    this.selectedChordName = 'Acorde Gerado'; // Or generate a more descriptive name
   }
 
-  clearCurrentProgression() {
-    this.progression = [];
-    this.selectedChordNotes = [];
-    this.stopProgression();
-  }
-
-  // --- Saved Progressions Logic ---
-  saveCurrentProgression() {
-    this.savedProgressions = this.storageService.saveProgression(
-      this.progression
-    );
-  }
-
-  deleteSavedProgression(index: number) {
-    this.savedProgressions = this.storageService.deleteProgression(index);
-  }
-
-  // --- Piano Logic ---
   selectChordForPiano(chord: Chord) {
     this.selectedChordName = chord.name;
     this.selectedChordNotes = chord.notes.split(' - ');
@@ -130,38 +92,5 @@ export class App implements OnInit {
     const noteName = parts[0];
     const octave = parts.length > 1 ? parseInt(parts[1], 10) : 4;
     this.audioService.playNote(noteName, octave);
-  }
-
-  playProgression() {
-    if (this.progression.length === 0) return;
-
-    this.isPlaying = true;
-    this.currentChordIndex = 0;
-
-    const playNextChord = () => {
-      if (this.currentChordIndex < this.progression.length) {
-        const chord = this.progression[this.currentChordIndex];
-        this.selectChordForPiano(chord);
-        this.currentChordIndex++;
-      } else {
-        this.stopProgression();
-      }
-    };
-
-    this.playbackInterval = setInterval(playNextChord, 1000); // Play subsequent chords every second
-  }
-
-  stopProgression() {
-    this.isPlaying = false;
-    if (this.playbackInterval) {
-      clearInterval(this.playbackInterval);
-      this.playbackInterval = null;
-    }
-  }
-
-  // --- Utility ---
-  // This is for the template to be able to show the saved progression chords
-  formatProgression(prog: Chord[]): string {
-    return prog.map((c) => c.name).join(' - ');
   }
 }

@@ -9,7 +9,7 @@
       <!-- Seção de Controles -->
       <mat-card class="card">
         <mat-card-header>
-          <mat-card-title>1. Defina a Tonalidade</mat-card-title>
+          <mat-card-title>Defina a Tonalidade</mat-card-title>
         </mat-card-header>
         <mat-card-content class="controls-container">
           <mat-form-field appearance="fill">
@@ -70,88 +70,6 @@
           </div>
         </mat-card-content>
       </mat-card>
-    </div>
-
-    <!-- Coluna da Direita: Progressões -->
-    <div class="column right-column">
-      <!-- Seção da Progressão -->
-      <mat-card class="card">
-        <mat-card-header>
-          <mat-card-title>3. Crie uma Progressão</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <mat-label>Quantidade de Acordes: {{ progressionLength }}</mat-label>
-          <mat-slider min="4" max="16" step="1" discrete="true">
-            <input matSliderThumb [(ngModel)]="progressionLength" />
-          </mat-slider>
-          <div *ngIf="progression.length === 0" class="placeholder">
-            A progressão aleatória aparecerá aqui...
-          </div>
-          <div *ngIf="progression.length > 0" class="progression-display">
-            <span
-              *ngFor="let chord of progression; let i = index; let last = last"
-              (click)="selectChordForPiano(chord)"
-              style="cursor: pointer"
-              class="progression-chord"
-              [class.playing]="isPlaying && i === currentChordIndex"
-            >
-              {{ chord.name }}{{ !last ? ' - ' : '' }}
-            </span>
-          </div>
-        </mat-card-content>
-        <mat-card-actions>
-          <div class="progression-controls">
-            <button mat-raised-button color="accent" (click)="generateRandomProgression()">
-              Gerar Progressão
-            </button>
-            <div class="playback-buttons">
-              <button mat-fab color="primary" (click)="playProgression()" [disabled]="progression.length === 0 || isPlaying" matTooltip="Play Progressão">
-                <mat-icon>play_arrow</mat-icon>
-              </button>
-              <button mat-fab color="warn" (click)="stopProgression()" [disabled]="!isPlaying" matTooltip="Stop Progressão">
-                <mat-icon>stop</mat-icon>
-              </button>
-            </div>
-            <button mat-button (click)="saveCurrentProgression()" [disabled]="progression.length === 0">
-              Salvar
-            </button>
-          </div>
-          <button
-            mat-button
-            color="warn"
-            (click)="clearCurrentProgression()"
-            [disabled]="progression.length === 0"
-          >
-            Excluir
-          </button>
-        </mat-card-actions>
-      </mat-card>
-
-      <!-- Seção de Progressões Salvas -->
-      <mat-card class="card">
-        <mat-card-header>
-          <mat-card-title>4. Progressões Salvas</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div *ngIf="savedProgressions.length === 0" class="placeholder">
-            Nenhuma progressão salva.
-          </div>
-          <div *ngFor="let saved of savedProgressions; let i = index" class="saved-progression-item">
-            <span class="saved-progression-text" (click)="progression = saved">
-              {{ formatProgression(saved) }}
-            </span>
-            <button
-              mat-stroked-button
-              color="warn"
-              (click)="deleteSavedProgression(i)"
-              aria-label="Delete progression"
-              matTooltip="Excluir progressão"
-            >
-              Excluir
-            </button>
-          </div>
-        </mat-card-content>
-      </mat-card>
 
       <!-- Seção da Escala -->
       <mat-card class="card">
@@ -176,6 +94,11 @@
           </div>
         </mat-card-content>
       </mat-card>
+    </div>
+
+    <!-- Coluna da Direita: Gerador de Acordes -->
+    <div class="column right-column">
+      <app-chord-generator (chordGenerated)="onChordGenerated($event)"></app-chord-generator>
     </div>
   </div>
 

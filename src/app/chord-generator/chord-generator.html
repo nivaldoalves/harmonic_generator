@@ -1,0 +1,32 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>3. Gerador de Acordes</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="controls-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Tônica</mat-label>
+      <mat-select [(ngModel)]="selectedRoot">
+        <mat-option *ngFor="let note of notes" [value]="note">{{ note }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo de Acorde</mat-label>
+      <mat-select [(ngModel)]="selectedChordType">
+        <mat-option *ngFor="let type of chordTypes" [value]="type.value">{{ type.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Inversão</mat-label>
+      <mat-select [(ngModel)]="selectedInversion">
+        <mat-option *ngFor="let inversion of inversions" [value]="inversion.value">{{ inversion.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="generateAndPlayChord()">
+      Ouvir Acorde
+    </button>
+  </mat-card-actions>
+</mat-card>
