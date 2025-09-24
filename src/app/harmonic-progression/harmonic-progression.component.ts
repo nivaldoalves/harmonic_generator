@@ -12,6 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Interface para representar um acorde salvo na progressão
 export interface ProgressionChord {
@@ -31,13 +33,16 @@ export interface ProgressionChord {
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSlideToggleModule,
+    MatTooltipModule
   ]
 })
 export class HarmonicProgressionComponent implements OnInit {
 
   progression: ProgressionChord[] = [];
   progressionName: string = '';
+  autoAddEnabled: boolean = true;
   isPlaying = false;
   currentChordIndex = -1;
   bpm = 120;

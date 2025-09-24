@@ -83,8 +83,8 @@ export class App implements OnInit {
     this.selectedChordNotes = event.notes;
     this.selectedChordName = event.name;
 
-    // Adiciona o acorde à lista de progressão
-    if (this.harmonicProgressionComponent) {
+    // Adiciona o acorde à lista de progressão somente se a chave estiver ligada
+    if (this.harmonicProgressionComponent && this.harmonicProgressionComponent.autoAddEnabled) {
       this.harmonicProgressionComponent.addChord(event);
     }
   }
@@ -95,8 +95,8 @@ export class App implements OnInit {
     this.selectedChordNotes = chordNotes;
     this.playChord(chordNotes);
 
-    // Adiciona o acorde à lista de progressão
-    if (this.harmonicProgressionComponent) {
+    // Adiciona o acorde à lista de progressão somente se a chave estiver ligada
+    if (this.harmonicProgressionComponent && this.harmonicProgressionComponent.autoAddEnabled) {
       this.harmonicProgressionComponent.addChord({ name: chord.name, notes: chordNotes });
     }
   }
