@@ -124,8 +124,9 @@
     <!-- Coluna da Direita: Gerador de Acordes -->
     <div class="column right-column">
       <app-chord-generator (chordGenerated)="onChordGenerated($event)"></app-chord-generator>
-
-      <app-harmonic-progression></app-harmonic-progression>
+      <app-harmonic-progression
+        (chordPlayedInProgression)="onChordPlayedInProgression($event)"
+      ></app-harmonic-progression>
     </div>
   </div>
 
@@ -139,7 +140,10 @@
         }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content class="piano-container">
-        <app-piano [notesToHighlight]="selectedChordNotes" [useFlats]="useFlats"></app-piano>
+        <app-piano
+          [notesToHighlight]="currentPianoHighlightNotes"
+          [useFlats]="useFlats"
+        ></app-piano>
       </mat-card-content>
     </mat-card>
   </div>

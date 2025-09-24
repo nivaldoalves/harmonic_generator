@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AudioService } from '../audio.service';
 import { Chord, MusicTheoryService } from '../music-theory';
@@ -46,6 +46,7 @@ export class HarmonicProgressionComponent implements OnInit {
   isPlaying = false;
   currentChordIndex = -1;
   bpm = 120;
+  @Output() chordPlayedInProgression = new EventEmitter<string[]>(); // Novo EventEmitter
   private timeoutId: any;
 
   constructor(private audioService: AudioService, public dialog: MatDialog) {}
@@ -80,6 +81,7 @@ export class HarmonicProgressionComponent implements OnInit {
       this.currentChordIndex = nextChordIndex % this.progression.length;
 
       const chord = this.progression[this.currentChordIndex];
+      this.chordPlayedInProgression.emit(chord.notes); // Emite as notas para o piano
       this.audioService.playChord(chord.notes);
 
       // Prepara o índice para o *próximo* acorde
@@ -99,6 +101,7 @@ export class HarmonicProgressionComponent implements OnInit {
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
     }
+    this.chordPlayedInProgression.emit([]); // Limpa o destaque do piano ao parar
     // O AudioService não tem um método stop, então apenas paramos o loop.
   }
 

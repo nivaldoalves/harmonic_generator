@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MusicTheoryService, Chord } from './music-theory';
 import { AudioService } from './audio.service';
-import { HarmonicProgressionComponent, ProgressionChord } from './harmonic-progression/harmonic-progression.component';
+import {
+  HarmonicProgressionComponent,
+  ProgressionChord,
+} from './harmonic-progression/harmonic-progression.component';
+import { PianoComponent } from './piano/piano'; // Importar PianoComponent para ViewChild
 
 interface NoteWithDegree {
   note: string;
@@ -16,7 +20,9 @@ interface NoteWithDegree {
   styleUrls: ['./app.component.scss'],
 })
 export class App implements OnInit {
-  @ViewChild(HarmonicProgressionComponent) harmonicProgressionComponent!: HarmonicProgressionComponent;
+  @ViewChild(HarmonicProgressionComponent)
+  harmonicProgressionComponent!: HarmonicProgressionComponent;
+  @ViewChild(PianoComponent) pianoComponent!: PianoComponent; // Adicionar ViewChild para PianoComponent
 
   // State for Harmonic Field
   selectedNote: string = 'C';
@@ -26,9 +32,10 @@ export class App implements OnInit {
   scaleNotes: string[] = [];
   scaleNotesWithDegrees: NoteWithDegree[] = [];
 
-  selectedChordNotes: string[] = [];
   selectedChordName: string = '';
   isHarmonicFieldLocked: boolean = false;
+
+  currentPianoHighlightNotes: string[] = []; // Nova propriedade para controlar o destaque do piano
 
   constructor(public musicTheoryService: MusicTheoryService, private audioService: AudioService) {}
 
@@ -75,12 +82,13 @@ export class App implements OnInit {
     this.harmonicField = [];
     this.scaleNotesWithDegrees = [];
     this.selectedChordName = '';
-    this.selectedChordNotes = [];
+    this.currentPianoHighlightNotes = []; // Limpa o destaque do piano ao resetar o campo harmônico
   }
 
   // --- Chord Interaction Logic ---
   onChordGenerated(event: ProgressionChord) {
-    this.selectedChordNotes = event.notes;
+    // Quando um acorde é gerado (ex: do ChordGenerator), atualiza o destaque do piano
+    this.currentPianoHighlightNotes = event.notes;
     this.selectedChordName = event.name;
 
     // Adiciona o acorde à lista de progressão somente se a chave estiver ligada
@@ -92,7 +100,8 @@ export class App implements OnInit {
   selectChordForPiano(chord: Chord) {
     this.selectedChordName = chord.name;
     const chordNotes = chord.notes.split(' - ');
-    this.selectedChordNotes = chordNotes;
+    // Quando um acorde é selecionado do campo harmônico, atualiza o destaque do piano
+    this.currentPianoHighlightNotes = chordNotes;
     this.playChord(chordNotes);
 
     // Adiciona o acorde à lista de progressão somente se a chave estiver ligada
@@ -103,6 +112,8 @@ export class App implements OnInit {
 
   // --- Audio Logic ---
   playChord(notes: string[]) {
+    // Este método é chamado ao tocar um único acorde, então atualiza o destaque do piano
+    this.currentPianoHighlightNotes = notes;
     this.audioService.playChord(notes);
   }
 
@@ -111,5 +122,12 @@ export class App implements OnInit {
     const noteName = parts[0];
     const octave = parts.length > 1 ? parseInt(parts[1], 10) : 4;
     this.audioService.playNote(noteName, octave);
+    // Ao tocar uma única nota, atualiza o destaque do piano
+    this.currentPianoHighlightNotes = [note];
+  }
+
+  // Novo método para lidar com acordes tocados pelo HarmonicProgressionComponent
+  onChordPlayedInProgression(notes: string[]) {
+    this.currentPianoHighlightNotes = notes;
   }
 }
