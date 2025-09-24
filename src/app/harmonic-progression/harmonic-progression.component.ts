@@ -65,8 +65,10 @@ export class HarmonicProgressionComponent implements OnInit {
   playProgression() {
     if (this.progression.length === 0) return;
 
+    this.bpm = 80; // Define o BPM para 80 ao iniciar a reprodução
     this.isPlaying = true;
     this.currentChordIndex = 0;
+    let nextChordIndex = 0;
 
     const playNextChord = () => {
       if (!this.isPlaying) {
@@ -74,15 +76,15 @@ export class HarmonicProgressionComponent implements OnInit {
         return;
       }
 
-      // Reinicia a progressão se chegar ao fim (loop)
-      if (this.currentChordIndex >= this.progression.length) {
-        this.currentChordIndex = 0;
-      }
+      // Atualiza o índice do acorde que está tocando *agora*
+      this.currentChordIndex = nextChordIndex % this.progression.length;
 
       const chord = this.progression[this.currentChordIndex];
       this.audioService.playChord(chord.notes);
 
-      this.currentChordIndex++;
+      // Prepara o índice para o *próximo* acorde
+      nextChordIndex = this.currentChordIndex + 1;
+
       // Calcula o intervalo a cada passo para permitir a mudança de BPM em tempo real
       const interval = (60 / this.bpm) * 1000;
       this.timeoutId = setTimeout(playNextChord, interval);
