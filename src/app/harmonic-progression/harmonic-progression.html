@@ -27,10 +27,15 @@
           class="play-chord-btn"
           matTooltip="Tocar este acorde"
         >
-          <mat-icon>play_arrow</mat-icon>
+          <mat-icon>S</mat-icon>
         </button>
         {{ chord.name }}
-        <button mat-icon-button (click)="removeChord(i)" class="remove-chord-btn">
+        <button
+          mat-icon-button
+          (click)="removeChord(i)"
+          class="remove-chord-btn"
+          matTooltip="Remover este acorde"
+        >
           <mat-icon>X</mat-icon>
         </button>
       </div>

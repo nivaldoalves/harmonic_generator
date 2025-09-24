@@ -109,3 +109,19 @@
 .delete-icon-button:hover .delete-icon {
   color: red;
 }
+
+.play-chord-btn {
+  margin-right: 4px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  background-color: #4caf50; /* Cor verde */
+  color: white;
+  border-radius: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.play-chord-btn:hover .mat-icon {
+  color: #388e3c;
+} /* Tom mais escuro de verde */
