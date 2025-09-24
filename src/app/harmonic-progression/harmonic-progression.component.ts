@@ -71,7 +71,7 @@ export class HarmonicProgressionComponent implements OnInit {
   playProgression() {
     if (this.progression.length === 0) return;
 
-    this.bpm = 80; // Define o BPM para 80 ao iniciar a reprodução
+    this.bpm = 60; // Define o BPM para 80 ao iniciar a reprodução
     this.isPlaying = true;
     this.currentChordIndex = 0;
     let nextChordIndex = 0;
