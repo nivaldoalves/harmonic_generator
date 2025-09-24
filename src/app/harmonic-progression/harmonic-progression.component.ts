@@ -67,18 +67,24 @@ export class HarmonicProgressionComponent implements OnInit {
 
     this.isPlaying = true;
     this.currentChordIndex = 0;
-    const interval = (60 / this.bpm) * 1000; // Converte BPM para milissegundos
 
     const playNextChord = () => {
-      if (!this.isPlaying || this.currentChordIndex >= this.progression.length) {
+      if (!this.isPlaying) {
         this.stopProgression();
         return;
+      }
+
+      // Reinicia a progressão se chegar ao fim (loop)
+      if (this.currentChordIndex >= this.progression.length) {
+        this.currentChordIndex = 0;
       }
 
       const chord = this.progression[this.currentChordIndex];
       this.audioService.playChord(chord.notes);
 
       this.currentChordIndex++;
+      // Calcula o intervalo a cada passo para permitir a mudança de BPM em tempo real
+      const interval = (60 / this.bpm) * 1000;
       this.timeoutId = setTimeout(playNextChord, interval);
     };
 
