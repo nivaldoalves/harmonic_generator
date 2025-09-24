@@ -41,7 +41,7 @@ export interface ProgressionChord {
 export class HarmonicProgressionComponent implements OnInit {
   progression: ProgressionChord[] = [];
   progressionName: string = '';
-  autoAddEnabled: boolean = true;
+  autoAddEnabled: boolean = false;
   isProgressionLoaded: boolean = false;
   isPlaying = false;
   currentChordIndex = -1;
