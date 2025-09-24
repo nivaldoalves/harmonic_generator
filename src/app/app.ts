@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MusicTheoryService, Chord } from './music-theory';
 import { AudioService } from './audio.service';
+import { HarmonicProgressionComponent, ProgressionChord } from './harmonic-progression/harmonic-progression.component';
 
 interface NoteWithDegree {
   note: string;
@@ -15,6 +16,8 @@ interface NoteWithDegree {
   styleUrls: ['./app.component.scss'],
 })
 export class App implements OnInit {
+  @ViewChild(HarmonicProgressionComponent) harmonicProgressionComponent!: HarmonicProgressionComponent;
+
   // State for Harmonic Field
   selectedNote: string = 'C';
   selectedMode: 'major' | 'minor' = 'major';
@@ -75,21 +78,31 @@ export class App implements OnInit {
     this.selectedChordNotes = [];
   }
 
-  // --- Harmonic Field Logic ---
-  onChordGenerated(event: { name: string; notes: string[] }) {
+  // --- Chord Interaction Logic ---
+  onChordGenerated(event: ProgressionChord) {
     this.selectedChordNotes = event.notes;
     this.selectedChordName = event.name;
+
+    // Adiciona o acorde à lista de progressão
+    if (this.harmonicProgressionComponent) {
+      this.harmonicProgressionComponent.addChord(event);
+    }
   }
 
   selectChordForPiano(chord: Chord) {
     this.selectedChordName = chord.name;
-    this.selectedChordNotes = chord.notes.split(' - ');
-    this.playChord(chord);
+    const chordNotes = chord.notes.split(' - ');
+    this.selectedChordNotes = chordNotes;
+    this.playChord(chordNotes);
+
+    // Adiciona o acorde à lista de progressão
+    if (this.harmonicProgressionComponent) {
+      this.harmonicProgressionComponent.addChord({ name: chord.name, notes: chordNotes });
+    }
   }
 
   // --- Audio Logic ---
-  playChord(chord: Chord) {
-    const notes = chord.notes.split(' - ');
+  playChord(notes: string[]) {
     this.audioService.playChord(notes);
   }
 

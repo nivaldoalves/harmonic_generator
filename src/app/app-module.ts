@@ -19,6 +19,10 @@ import { FormsModule } from '@angular/forms';
 import { PianoComponent } from './piano/piano';
 import { AudioService } from './audio.service';
 import { ChordGenerator } from './chord-generator/chord-generator';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
+import { HarmonicProgressionComponent } from './harmonic-progression/harmonic-progression.component';
+import { LoadProgressionDialogComponent } from './load-progression-dialog/load-progression-dialog.component';
 
 
 @NgModule({
@@ -40,7 +44,11 @@ import { ChordGenerator } from './chord-generator/chord-generator';
     MatSliderModule,
     MatInputModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule,
+    MatListModule,
+    HarmonicProgressionComponent, // Moved here
+    LoadProgressionDialogComponent // Moved here
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
