@@ -35,33 +35,31 @@ export interface ProgressionChord {
     MatFormFieldModule,
     MatInputModule,
     MatSlideToggleModule,
-    MatTooltipModule
-  ]
+    MatTooltipModule,
+  ],
 })
 export class HarmonicProgressionComponent implements OnInit {
-
   progression: ProgressionChord[] = [];
   progressionName: string = '';
   autoAddEnabled: boolean = true;
+  isProgressionLoaded: boolean = false;
   isPlaying = false;
   currentChordIndex = -1;
   bpm = 120;
   private timeoutId: any;
 
-  constructor(
-    private audioService: AudioService,
-    public dialog: MatDialog
-  ) { }
+  constructor(private audioService: AudioService, public dialog: MatDialog) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   addChord(chord: ProgressionChord) {
     this.progression.push(chord);
+    this.isProgressionLoaded = false; // Modificação na progressão indica que não é mais a versão salva
   }
 
   removeChord(index: number) {
     this.progression.splice(index, 1);
+    this.isProgressionLoaded = false; // Modificação na progressão indica que não é mais a versão salva
   }
 
   playProgression() {
@@ -102,6 +100,7 @@ export class HarmonicProgressionComponent implements OnInit {
     const savedProgressions = JSON.parse(localStorage.getItem('harmonic_progressions') || '{}');
     savedProgressions[this.progressionName] = this.progression;
     localStorage.setItem('harmonic_progressions', JSON.stringify(savedProgressions));
+    this.isProgressionLoaded = true; // A progressão agora está salva e "carregada"
 
     // Poderíamos adicionar um feedback para o usuário aqui, como um snackbar.
     console.log(`Progressão '${this.progressionName}' salva!`);
@@ -113,14 +112,28 @@ export class HarmonicProgressionComponent implements OnInit {
 
     const dialogRef = this.dialog.open(LoadProgressionDialogComponent, {
       width: '250px',
-      data: { progressionNames: progressionNames }
+      data: { progressionNames: progressionNames },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.progressionName = result;
         this.progression = savedProgressions[result];
+        this.isProgressionLoaded = true;
       }
     });
+  }
+
+  deleteProgression() {
+    if (!this.progressionName) return;
+
+    const savedProgressions = JSON.parse(localStorage.getItem('harmonic_progressions') || '{}');
+    delete savedProgressions[this.progressionName];
+    localStorage.setItem('harmonic_progressions', JSON.stringify(savedProgressions));
+
+    // Limpa o estado atual
+    this.progressionName = '';
+    this.progression = [];
+    this.isProgressionLoaded = false;
   }
 }
