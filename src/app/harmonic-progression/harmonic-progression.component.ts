@@ -63,6 +63,11 @@ export class HarmonicProgressionComponent implements OnInit {
     this.isProgressionLoaded = false; // Modificação na progressão indica que não é mais a versão salva
   }
 
+  playSingleChord(chord: ProgressionChord) {
+    this.audioService.playChord(chord.notes);
+    this.chordPlayedInProgression.emit(chord.notes);
+  }
+
   playProgression() {
     if (this.progression.length === 0) return;
 

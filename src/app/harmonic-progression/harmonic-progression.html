@@ -21,6 +21,14 @@
         class="chord-chip"
         [class.active]="i === currentChordIndex"
       >
+        <button
+          mat-icon-button
+          (click)="playSingleChord(chord)"
+          class="play-chord-btn"
+          matTooltip="Tocar este acorde"
+        >
+          <mat-icon>play_arrow</mat-icon>
+        </button>
         {{ chord.name }}
         <button mat-icon-button (click)="removeChord(i)" class="remove-chord-btn">
           <mat-icon>X</mat-icon>
