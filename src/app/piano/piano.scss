@@ -1,7 +1,25 @@
+// Variables
+$max-width: 1200px;
+$white-key-color: #ffffff;
+$black-key-color: #222222;
+$highlight-color: #ff4081; // Angular Material Accent Color (Pink)
+$stroke-color: #cccccc;
+$white-key-name-color: #111111;
+$black-key-name-color: #ffffff;
+$transition-speed: 0.15s;
+
+// Mixins
+@mixin user-select-none {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+// Host and SVG
 :host {
   display: block;
   width: 100%;
-  max-width: 1200px;
+  max-width: $max-width;
   margin: 0 auto;
 }
 
@@ -10,53 +28,54 @@ svg {
   display: block;
 }
 
-.white-key {
-  fill: #ffffff;
-  stroke: #cccccc;
-  stroke-width: 1px;
-  transition: fill 0.15s ease-in-out;
-  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+// Piano Keys
+.white-key, .black-key {
+  transition: fill $transition-speed ease-in-out;
   cursor: pointer;
+}
+
+.white-key {
+  fill: $white-key-color;
+  stroke: $stroke-color;
+  stroke-width: 1px;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+
+  &:hover {
+    fill: darken($white-key-color, 10%);
+  }
+
+  .white-key-name {
+    fill: $white-key-name-color;
+  }
 }
 
 .black-key {
-  fill: #222222;
-  transition: fill 0.15s ease-in-out;
+  fill: $black-key-color;
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
-  cursor: pointer;
+
+  &:hover {
+    fill: lighten($black-key-color, 10%);
+  }
+
+  .black-key-name {
+    fill: $black-key-name-color;
+  }
 }
 
-/* Highlight style for any key */
+// Key States
 .highlighted {
-  fill: #ff4081; /* Angular Material Accent Color (Pink) */
+  fill: $highlight-color;
   stroke: none;
+
+  &:hover {
+    fill: darken($highlight-color, 5%);
+  }
 }
 
+// Key Names
 .key-name {
   text-anchor: middle;
   font-size: 12px;
   font-weight: bold;
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
-}
-
-.white-key-name {
-  fill: #111111;
-}
-
-.black-key-name {
-  fill: #ffffff;
-}
-
-.white-key:hover {
-  fill: #ffffffb5;
-}
-
-.black-key:hover {
-  fill: #222222e2;
-}
-
-.highlighted:hover {
-  fill: #ff4080d5; /* Darker pink for hover on highlighted keys */
+  @include user-select-none;
 }

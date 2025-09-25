@@ -1,16 +1,40 @@
-/* Estilos para o componente principal */
-.main-container {
+// Variables
+$primary-color: #3f51b5;
+$accent-color: #ff4081;
+$warn-color: #f44336;
+$yellow-color: #fdd835;
+$light-gray-color: #f5f5f5;
+$medium-gray-color: #e0e0e0;
+$dark-gray-color: #888;
+$border-color: #eee;
+$text-color-dark: #111;
+$text-color-light: #666;
+
+$spacing-small: 8px;
+$spacing-medium: 10px;
+$spacing-large: 15px;
+$spacing-xlarge: 20px;
+
+$border-radius: 4px;
+
+// Mixins
+@mixin flex-container($direction: row, $justify: flex-start, $align: stretch, $gap: 0) {
   display: flex;
-  flex-direction: column;
-  padding: 15px;
-  gap: 10px;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+// Main Layout
+.main-container {
+  @include flex-container(column, $gap: $spacing-medium);
+  padding: $spacing-large;
 }
 
 .top-section {
-  display: flex;
+  @include flex-container(row, $gap: $spacing-medium);
   flex-wrap: wrap;
-  gap: 10px;
-  align-items: stretch;
 }
 
 .bottom-section {
@@ -18,192 +42,172 @@
 }
 
 .column {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  @include flex-container(column, $gap: $spacing-medium);
   flex: 1;
   min-width: 320px;
 }
 
+.right-column .card {
+  flex-grow: 1;
+  @include flex-container(column);
+
+  mat-card-content {
+    flex-grow: 1;
+    @include flex-container(column, $justify: center);
+  }
+}
+
+// Cards and Containers
 .card {
   width: 100%;
 }
 
 .controls-container {
-  display: flex;
-  align-items: baseline;
-  gap: 20px;
+  @include flex-container(row, $align: baseline, $gap: $spacing-xlarge);
   flex-wrap: wrap;
-}
 
-.controls-container .mat-mdc-form-field {
-  /* Ajuste fino para alinhar o mat-form-field com os botões */
-  position: relative;
-  top: 5px;
-}
-
-.placeholder {
-  color: #888;
-  font-style: italic;
-  text-align: center;
-  padding: 20px 0;
+  .mat-mdc-form-field {
+    position: relative;
+    top: 5px;
+  }
 }
 
 .piano-container {
   min-height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-container(row, $justify: center, $align: center);
 }
 
+// Chord and Progression Display
 .chord-display {
-  border: 1px solid #eee;
-  padding: 8px;
-  margin-top: 8px;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
+  @include flex-container(row, $justify: space-between);
+  border: 1px solid $border-color;
+  padding: $spacing-small;
+  margin-top: $spacing-small;
+  border-radius: $border-radius;
   transition: background-color 0.15s ease;
-}
 
-.chord-display:hover {
-  background-color: #f5f5f5;
-}
+  &:hover {
+    background-color: $light-gray-color;
+  }
 
-.chord-name {
-  font-weight: bold;
-}
+  .chord-name {
+    font-weight: bold;
+  }
 
-mat-card-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-mat-slider {
-  width: 100%;
-}
-
-/* Cores para os tipos de acorde */
-.chord-display.major {
-  border-left: 5px solid #3f51b5; /* Azul (Primary) */
-}
-
-.chord-display.minor {
-  border-left: 5px solid #ff4081; /* Rosa (Accent) */
-}
-
-.chord-display.dominant {
-  border-left: 5px solid #fdd835; /* Amarelo */
-}
-
-.chord-display.diminished {
-  border-left: 5px solid #f44336; /* Vermelho (Warn) */
+  &.major {
+    border-left: 5px solid $primary-color;
+  }
+  &.minor {
+    border-left: 5px solid $accent-color;
+  }
+  &.dominant {
+    border-left: 5px solid $yellow-color;
+  }
+  &.diminished {
+    border-left: 5px solid $warn-color;
+  }
 }
 
 .progression-display {
-  margin-top: 16px;
-  padding: 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  margin-top: $spacing-large;
+  padding: $spacing-large;
+  border: 1px solid $medium-gray-color;
+  border-radius: $border-radius;
   text-align: center;
   font-size: 1.1em;
   letter-spacing: 1px;
 }
 
-.progression-chord:hover {
-  background-color: #f0f0f0;
-  border-radius: 4px;
+.progression-chord {
+  &:hover {
+    background-color: $light-gray-color;
+    border-radius: $border-radius;
+  }
+
+  &.playing {
+    font-weight: bold;
+    color: $accent-color;
+  }
 }
 
-.progression-chord.playing {
-  font-weight: bold;
-  color: #ff4081; /* Cor de destaque do Angular Material (accent) */
-}
-
+// Scale Display
 .scale-display {
-  display: flex;
+  @include flex-container(row, $justify: center, $gap: $spacing-medium);
   flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
 }
 
 .scale-note-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include flex-container(column, $align: center);
 }
 
 .scale-degree {
   font-size: 0.8em;
   font-weight: bold;
-  color: #666;
+  color: $text-color-light;
 }
 
 .scale-note {
-  padding: 10px;
+  padding: $spacing-medium;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: $light-gray-color;
   }
+}
+
+// Text and Placeholders
+.placeholder {
+  color: $dark-gray-color;
+  font-style: italic;
+  text-align: center;
+  padding: $spacing-xlarge 0;
 }
 
 .chord-visualization-name {
   font-size: 1.5em;
   font-weight: bold;
-  margin-top: 8px;
+  margin-top: $spacing-small;
 }
 
-.progression-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+// Controls and Actions
+mat-card-actions {
+  @include flex-container(row, $justify: flex-end, $gap: $spacing-small);
+}
+
+mat-slider {
   width: 100%;
 }
 
-@media (max-width: 600px) {
-  .progression-controls {
+.progression-controls {
+  @include flex-container(row, $justify: space-between, $align: center);
+  width: 100%;
+
+  @media (max-width: 600px) {
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: $spacing-large;
   }
 }
 
 .playback-buttons {
-  display: flex;
-  gap: 16px;
+  @include flex-container(row, $gap: $spacing-large);
 }
 
+// Saved Progressions
 .saved-progression-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px;
-  border-bottom: 1px solid #eee;
+  @include flex-container(row, $justify: space-between, $align: center);
+  padding: $spacing-small;
+  border-bottom: 1px solid $border-color;
 }
 
 .saved-progression-text {
   cursor: pointer;
   flex-grow: 1;
-}
 
-.saved-progression-text:hover {
-  color: #3f51b5;
-}
-
-.right-column .card {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.right-column .card mat-card-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  &:hover {
+    color: $primary-color;
+  }
 }

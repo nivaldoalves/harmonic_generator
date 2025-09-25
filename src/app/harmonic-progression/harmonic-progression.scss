@@ -1,3 +1,42 @@
+// Variables
+$primary-color: #1976d2;
+$accent-color: #ff4081;
+$primary-dark-color: #3f51b5;
+$success-color: #388e3c;
+$danger-color: red;
+$light-gray-color: #e0e0e0;
+$text-color-light: white;
+$border-color: rgba(0, 0, 0, 0.12);
+$placeholder-color: rgba(0, 0, 0, 0.54);
+
+$border-radius-small: 4px;
+$border-radius-large: 16px;
+$border-radius-round: 20%;
+
+$gap: 16px;
+$small-gap: 8px;
+
+// Mixins
+@mixin icon-size($size: 16px) {
+  font-size: $size;
+  width: $size;
+  height: $size;
+  line-height: $size;
+}
+
+@mixin action-button($bg-color) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  background-color: $bg-color;
+  color: $text-color-light;
+  border-radius: $border-radius-round;
+}
+
+// General Layout
 .card-header-with-toggle {
   display: flex;
   justify-content: space-between;
@@ -7,121 +46,93 @@
 .progression-display {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  padding: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
+  gap: $small-gap;
+  padding: $gap;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-small;
   min-height: 60px;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: $gap;
+
+  .placeholder {
+    color: $placeholder-color;
+  }
 }
 
-.placeholder {
-  color: rgba(0, 0, 0, 0.54);
-}
-
+// Chord Chip
 .chord-chip {
   display: flex;
   align-items: center;
-  padding: 4px 8px;
-  background-color: #e0e0e0;
-  border-radius: 16px;
+  padding: 4px $small-gap;
+  background-color: $light-gray-color;
+  border-radius: $border-radius-large;
   font-weight: 500;
+
+  &.active {
+    background-color: $primary-color;
+    color: $text-color-light;
+  }
 }
 
-.chord-chip.active {
-  background-color: #1976d2; /* Cor primária */
-  color: white;
-}
-
+// Action Buttons
 .remove-chord-btn {
-  margin-left: 4px;
-  margin-right: 8px;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  background-color: #ff4081;
-  color: white;
-  border-radius: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.remove-chord-btn:hover .mat-icon {
-  color: red;
+  @include action-button($accent-color);
+  margin: 0 $small-gap 0 4px;
+  &:hover .mat-icon {
+    color: $danger-color;
+  }
 }
 
+.delete-icon-button {
+  @include action-button($accent-color);
+  margin: 0 $small-gap 0 4px;
+  &:hover .delete-icon {
+    color: $danger-color;
+  }
+}
+
+.play-chord-btn {
+  @include action-button($primary-dark-color);
+  margin-right: 4px;
+  &:hover .mat-icon {
+    color: $success-color;
+  }
+}
+
+// Icons
 .mat-icon {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
-}
-.mat-icon:hover {
-  color: red;
+  @include icon-size;
+  &:hover {
+    color: $danger-color;
+  }
 }
 
+.delete-icon {
+  @include icon-size;
+  &:hover {
+    color: $danger-color;
+  }
+}
+
+// Controls
 .playback-controls {
   display: flex;
-  gap: 16px;
+  gap: $gap;
   align-items: center;
-  margin-bottom: 16px;
-}
+  margin-bottom: $gap;
 
-.bpm-field {
-  width: 100px;
+  .bpm-field {
+    width: 100px;
+  }
 }
 
 .save-load-actions {
   display: flex;
-  gap: 16px;
+  gap: $gap;
   align-items: center;
-  padding: 0 16px 16px;
-}
+  padding: 0 $gap $gap;
 
-.progression-name-field {
-  flex-grow: 1;
+  .progression-name-field {
+    flex-grow: 1;
+  }
 }
-
-.delete-icon {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
-}
-.delete-icon:hover {
-  color: red;
-}
-
-.delete-icon-button {
-  margin-left: 4px;
-  margin-right: 8px;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  background-color: #ff4081;
-  color: white;
-  border-radius: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.delete-icon-button:hover .delete-icon {
-  color: red;
-}
-
-.play-chord-btn {
-  margin-right: 4px;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  background-color: #3f51b5; /* Cor primária */
-  color: white;
-  border-radius: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.play-chord-btn:hover .mat-icon {
-  color: #388e3c;
-} /* Tom mais escuro de verde */
