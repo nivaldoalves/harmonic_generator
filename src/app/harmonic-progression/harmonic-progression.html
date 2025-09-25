@@ -1,7 +1,12 @@
 <mat-card class="card">
   <mat-card-header class="card-header-with-toggle">
     <mat-card-title>Progressão Harmônica</mat-card-title>
-    <mat-slide-toggle [(ngModel)]="autoAddEnabled"> Adicionar </mat-slide-toggle>
+    <mat-slide-toggle
+      [(ngModel)]="autoAddEnabled"
+      matTooltip="Se ligado, os acordes tocados são adicionados automaticamente à progressão"
+    >
+      Adicionar
+    </mat-slide-toggle>
   </mat-card-header>
 
   <mat-card-content>
@@ -16,12 +21,23 @@
         class="chord-chip"
         [class.active]="i === currentChordIndex"
       >
-        <button mat-icon-button (click)="playSingleChord(chord)" class="play-chord-btn">
-          <mat-icon>S</mat-icon>
+        <button
+          mat-icon-button
+          (click)="playSingleChord(chord)"
+          class="play-chord-btn"
+          matTooltip="Tocar este acorde"
+        >
+          <mat-icon>play_circle_outline</mat-icon>
         </button>
         {{ chord.name }}
-        <button mat-icon-button (click)="removeChord(i)" class="remove-chord-btn">
-          <mat-icon>X</mat-icon>
+        <button
+          mat-icon-button
+          (click)="removeChord(i)"
+          class="remove-chord-btn"
+          matTooltip="Remover este acorde"
+        >
+          <!-- <mat-icon>close</mat-icon> -->
+          <mat-icon class="delete-icon">delete</mat-icon>
         </button>
       </div>
     </div>
@@ -34,11 +50,11 @@
         (click)="playProgression()"
         [disabled]="progression.length === 0 || isPlaying"
       >
-        <!-- <mat-icon>play_arrow</mat-icon> -->
+        <mat-icon>play_arrow</mat-icon>
         Play
       </button>
       <button mat-raised-button color="warn" (click)="stopProgression()" [disabled]="!isPlaying">
-        <!-- <mat-icon>stop</mat-icon> -->
+        <mat-icon>stop</mat-icon>
         Stop
       </button>
       <mat-form-field appearance="fill" class="bpm-field">
@@ -58,8 +74,9 @@
         mat-icon-button
         matSuffix
         (click)="deleteProgression()"
+        matTooltip="Excluir progressão salva"
       >
-        <mat-icon class="delete-icon">X</mat-icon>
+        <mat-icon class="delete-icon">delete</mat-icon>
       </button>
     </mat-form-field>
     <button
@@ -68,16 +85,12 @@
       (click)="saveProgression()"
       [disabled]="progression.length === 0 || !progressionName"
     >
-      <!-- <mat-icon>save</mat-icon> -->
+      <mat-icon>save</mat-icon>
       Salvar
     </button>
     <button mat-stroked-button (click)="loadProgressionDialog()">
-      <!-- <mat-icon>folder_open</mat-icon> -->
+      <mat-icon>folder_open</mat-icon>
       Carregar
     </button>
   </mat-card-actions>
 </mat-card>
-<!-- matTooltip="Se ligado, os acordes tocados são adicionados automaticamente à progressão" -->
-<!--matTooltip="Remover este acorde"-->
-<!--matTooltip="Excluir progressão salva"-->
-<!-- matTooltip="Tocar este acorde" -->
