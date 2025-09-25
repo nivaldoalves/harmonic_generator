@@ -1,0 +1,37 @@
+
+  .full-width {
+    width: 100%;
+  }
+
+  .custom-form-field {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.04);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 20px 16px 8px 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+  }
+
+  .custom-label {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.6);
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+  }
+
+  .mat-button-toggle-group {
+    border: none;
+    width: 100%;
+    display: flex;
+    margin-top: 8px; /* Adiciona espaço entre o título e os botões */
+    border-radius: 4px; /* Arredonda os cantos do grupo */
+    overflow: hidden; /* Garante que os botões internos respeitem os cantos arredondados */
+  }
+
+  .toggle-button {
+    flex: 1;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  }
