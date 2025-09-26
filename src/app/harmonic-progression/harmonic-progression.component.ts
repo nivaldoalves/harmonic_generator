@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AudioService } from '../audio.service';
 import { Chord, MusicTheoryService } from '../music-theory';
 import { LoadProgressionDialogComponent } from '../load-progression-dialog/load-progression-dialog.component';
+import { HelpDialogComponent } from '../help-dialog/help-dialog.component';
 
 // Importações para Standalone Component
 import { CommonModule } from '@angular/common';
@@ -52,6 +53,13 @@ export class HarmonicProgressionComponent implements OnInit {
   constructor(private audioService: AudioService, public dialog: MatDialog) {}
 
   ngOnInit(): void {}
+
+  openHelpDialog(title: string, content: string): void {
+    this.dialog.open(HelpDialogComponent, {
+      width: '400px',
+      data: { title, content },
+    });
+  }
 
   addChord(chord: ProgressionChord) {
     this.progression.push(chord);

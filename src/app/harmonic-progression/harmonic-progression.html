@@ -1,6 +1,9 @@
 <mat-card class="card">
   <mat-card-header class="card-header-with-toggle">
-    <mat-card-title>Progressão Harmônica</mat-card-title>
+    <mat-card-title>
+      Progressão Harmônica
+      <mat-icon class="help-icon" matTooltip="Sobre" (click)="openHelpDialog('Progressão Harmônica', '')">help_outline</mat-icon>
+    </mat-card-title>
     <mat-slide-toggle
       [(ngModel)]="autoAddEnabled"
       matTooltip="Se ligado, os acordes tocados são adicionados automaticamente à progressão"

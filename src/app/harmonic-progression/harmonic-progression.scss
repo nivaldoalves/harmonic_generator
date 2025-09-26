@@ -136,3 +136,16 @@ $small-gap: 8px;
     flex-grow: 1;
   }
 }
+
+.help-icon {
+  font-size: 18px;
+  vertical-align: middle;
+  margin-left: 8px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+}

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MusicTheoryService, Chord } from '../music-theory';
 import { AudioService } from '../audio.service';
+import { MatDialog } from '@angular/material/dialog';
+import { HelpDialogComponent } from '../help-dialog/help-dialog.component';
 
 @Component({
   selector: 'app-chord-generator',
@@ -84,7 +86,14 @@ export class ChordGenerator {
   selectedInversion: number = 0;
   useFlats: boolean = false;
 
-  constructor(private musicTheoryService: MusicTheoryService, private audioService: AudioService) {}
+  constructor(private musicTheoryService: MusicTheoryService, private audioService: AudioService, public dialog: MatDialog) {}
+
+  openHelpDialog(title: string, content: string): void {
+    this.dialog.open(HelpDialogComponent, {
+      width: '400px',
+      data: { title, content },
+    });
+  }
 
   get notes(): string[] {
     return this.useFlats ? this.musicTheoryService.notesFlat : this.musicTheoryService.notesSharp;

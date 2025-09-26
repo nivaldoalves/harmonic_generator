@@ -6,6 +6,8 @@ import {
   ProgressionChord,
 } from './harmonic-progression/harmonic-progression.component';
 import { PianoComponent } from './piano/piano'; // Importar PianoComponent para ViewChild
+import { MatDialog } from '@angular/material/dialog';
+import { HelpDialogComponent } from './help-dialog/help-dialog.component';
 
 interface NoteWithDegree {
   note: string;
@@ -37,11 +39,18 @@ export class App implements OnInit {
 
   currentPianoHighlightNotes: string[] = []; // Nova propriedade para controlar o destaque do piano
 
-  constructor(public musicTheoryService: MusicTheoryService, private audioService: AudioService) {}
+  constructor(public musicTheoryService: MusicTheoryService, private audioService: AudioService, public dialog: MatDialog) {}
 
   ngOnInit() {
     // O campo harmônico não será mais gerado automaticamente na inicialização
     // para permitir que o usuário defina a tonalidade primeiro.
+  }
+
+  openHelpDialog(title: string, content: string): void {
+    this.dialog.open(HelpDialogComponent, {
+      width: '400px',
+      data: { title, content },
+    });
   }
 
   get notes(): string[] {

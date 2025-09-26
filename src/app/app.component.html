@@ -9,7 +9,10 @@
       <!-- Seção de Controles -->
       <mat-card class="card">
         <mat-card-header>
-          <mat-card-title>Defina a Tonalidade</mat-card-title>
+          <mat-card-title>
+            Defina a Tonalidade
+            <mat-icon class="help-icon" matTooltip="Sobre" (click)="openHelpDialog('Defina a Tonalidade', '')">help_outline</mat-icon>
+          </mat-card-title>
         </mat-card-header>
         <mat-card-content class="controls-container">
           <mat-form-field appearance="fill">
@@ -64,7 +67,10 @@
       <mat-card class="card harmonic-field-card">
         <mat-card-header>
           <div *ngIf="!isHarmonicFieldLocked">
-            <mat-card-title>Campo Harmônico</mat-card-title>
+            <mat-card-title>
+              Campo Harmônico
+              <mat-icon class="help-icon" matTooltip="Sobre" (click)="openHelpDialog('Campo Harmônico', '')">help_outline</mat-icon>
+            </mat-card-title>
           </div>
           <div *ngIf="isHarmonicFieldLocked">
             <mat-card-title>
@@ -97,7 +103,10 @@
       <mat-card class="card">
         <mat-card-header>
           <div *ngIf="!isHarmonicFieldLocked">
-            <mat-card-title>Escala</mat-card-title>
+            <mat-card-title>
+              Escala
+              <mat-icon class="help-icon" matTooltip="Sobre" (click)="openHelpDialog('Escala', '')">help_outline</mat-icon>
+            </mat-card-title>
           </div>
           <div *ngIf="isHarmonicFieldLocked">
             <mat-card-title>
@@ -134,7 +143,10 @@
   <div class="bottom-section">
     <mat-card class="card">
       <mat-card-header>
-        <mat-card-title>Visualização do Acorde</mat-card-title>
+        <mat-card-title>
+          Visualização do Acorde
+          <mat-icon class="help-icon" matTooltip="Sobre" (click)="openHelpDialog('Visualização do Acorde', '')">help_outline</mat-icon>
+        </mat-card-title>
         <mat-card-subtitle class="chord-visualization-name">{{
           selectedChordName
         }}</mat-card-subtitle>
