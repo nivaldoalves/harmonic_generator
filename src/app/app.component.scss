@@ -9,6 +9,7 @@ $dark-gray-color: #888;
 $border-color: #eee;
 $text-color-dark: #111;
 $text-color-light: #666;
+$warn-color: #f57c00;
 
 $spacing-small: 8px;
 $spacing-medium: 10px;
@@ -169,7 +170,7 @@ $border-radius: 4px;
 
 // Text and Placeholders
 .placeholder {
-  color: $dark-gray-color;
+  color: $warn-color;
   font-style: italic;
   text-align: center;
   padding: $spacing-xlarge 0;

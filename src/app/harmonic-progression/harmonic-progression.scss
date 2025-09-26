@@ -8,6 +8,7 @@ $light-gray-color: #e0e0e0;
 $text-color-light: white;
 $border-color: rgba(0, 0, 0, 0.12);
 $placeholder-color: rgba(0, 0, 0, 0.54);
+$warn-color: #f57c00;
 
 $border-radius-small: 4px;
 $border-radius-large: 16px;
@@ -64,7 +65,9 @@ $small-gap: 8px;
   margin-bottom: $gap;
 
   .placeholder {
-    color: $placeholder-color;
+    // Cor do texto de aviso quando a progressão está vazia
+    color: $warn-color;
+    font-style: italic;
   }
 }
 
