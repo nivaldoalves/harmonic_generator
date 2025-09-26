@@ -2,7 +2,14 @@
   <mat-card-header class="card-header-with-toggle">
     <mat-card-title>
       Progressão Harmônica
-      <mat-icon class="help-icon" matTooltip="Sobre" (click)="openHelpDialog('Progressão Harmônica', '')">help_outline</mat-icon>
+      <mat-icon
+        class="help-icon"
+        matTooltip="Sobre"
+        (click)="
+          openHelpDialog('Progressão Harmônica', 'Texto explicativo sobre progressão harmônica...')
+        "
+        >help_outline</mat-icon
+      >
     </mat-card-title>
     <mat-slide-toggle
       [(ngModel)]="autoAddEnabled"
