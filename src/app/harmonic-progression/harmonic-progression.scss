@@ -100,11 +100,8 @@ $small-gap: 8px;
 }
 
 // Icons
-.mat-icon {
+.mat-icon:not(.help-icon) {
   @include icon-size;
-  &:hover {
-    color: $danger-color;
-  }
 }
 
 .delete-icon {
