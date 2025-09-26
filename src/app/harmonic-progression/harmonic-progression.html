@@ -8,7 +8,8 @@
         (click)="
           openHelpDialog('Progressão Harmônica', 'Texto explicativo sobre progressão harmônica...')
         "
-        >info</mat-icon>
+        >info</mat-icon
+      >
     </mat-card-title>
     <mat-slide-toggle
       [(ngModel)]="autoAddEnabled"
@@ -66,6 +67,16 @@
         <mat-icon>stop</mat-icon>
         Stop
       </button>
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="clearProgression()"
+        [disabled]="progression.length === 0"
+        matTooltip="Limpar todos os acordes da progressão atual"
+      >
+        <mat-icon>delete_sweep</mat-icon>
+        Limpar
+      </button>
       <mat-form-field appearance="fill" class="bpm-field">
         <mat-label>BPM</mat-label>
         <input matInput type="number" [(ngModel)]="bpm" min="40" max="240" />
@@ -99,7 +110,7 @@
     </button>
     <button mat-stroked-button (click)="loadProgressionDialog()">
       <mat-icon>folder_open</mat-icon>
-      Carregar
+      Progressões
     </button>
   </mat-card-actions>
 </mat-card>
