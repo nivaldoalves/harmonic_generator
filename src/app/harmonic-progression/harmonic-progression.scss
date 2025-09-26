@@ -16,6 +16,15 @@ $border-radius-round: 20%;
 $gap: 16px;
 $small-gap: 8px;
 
+.card-title {
+  color: $primary-dark-color;
+  font-size: 1.25rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 // Mixins
 @mixin icon-size($size: 16px) {
   font-size: $size;

@@ -17,6 +17,15 @@ $spacing-xlarge: 20px;
 
 $border-radius: 4px;
 
+.card-title {
+  color: $primary-color;
+  font-size: 1.25rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 // Mixins
 @mixin flex-container($direction: row, $justify: flex-start, $align: stretch, $gap: 0) {
   display: flex;
