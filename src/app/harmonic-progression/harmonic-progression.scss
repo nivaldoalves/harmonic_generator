@@ -126,7 +126,8 @@ $small-gap: 8px;
 // Controls
 .playback-controls {
   display: flex;
-  gap: $gap;
+  flex-wrap: wrap;
+  gap: $small-gap;
   align-items: center;
   margin-bottom: $gap;
 
@@ -137,7 +138,8 @@ $small-gap: 8px;
 
 .save-load-actions {
   display: flex;
-  gap: $gap;
+  flex-wrap: wrap;
+  gap: $small-gap;
   align-items: center;
   padding: 0 $gap $gap;
 
@@ -162,4 +164,18 @@ $small-gap: 8px;
 mat-card-title {
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 600px) {
+  .playback-controls,
+  .save-load-actions {
+    gap: $small-gap;
+
+    .mat-button,
+    .mat-raised-button,
+    .mat-stroked-button {
+      font-size: 12px; // Reduz o tamanho da fonte dos botões
+      padding: 0 8px; // Ajusta o padding dos botões
+    }
+  }
 }
