@@ -38,6 +38,7 @@ $border-radius: 4px;
 
 // Main Layout
 .main-container {
+  background-color: $medium-gray-color;
   @include flex-container(column, $gap: $spacing-medium);
   padding: $spacing-large;
 }
