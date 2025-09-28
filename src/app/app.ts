@@ -88,6 +88,16 @@ export class App implements OnInit {
     this.isHarmonicFieldLocked = true;
   }
 
+  resetApp() {
+    this.selectedNote = 'C';
+    this.selectedMode = 'major';
+    this.useFlats = false;
+    this.resetHarmonicField();
+    if (this.harmonicProgressionComponent) {
+      this.harmonicProgressionComponent.clearProgression();
+    }
+  }
+
   resetHarmonicField() {
     this.isHarmonicFieldLocked = false;
     this.harmonicField = [];

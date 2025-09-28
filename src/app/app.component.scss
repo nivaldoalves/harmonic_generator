@@ -240,6 +240,7 @@ mat-card-title {
   width: 40px;       /* Fixed width */
   margin-right: 10px; /* Space between logo and title */
   object-fit: cover; /* Ensures the image covers the area without distortion */
+  cursor: pointer;
 }
 
 /* Responsive adjustments for smaller screens */
