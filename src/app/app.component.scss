@@ -175,8 +175,7 @@ $border-radius: 4px;
   font-style: italic;
   text-align: center;
   padding: $spacing-xlarge 0;
-}
-
+}
 .chord-visualization-name {
   font-size: 1.5em;
   font-weight: bold;
@@ -239,4 +238,21 @@ mat-slider {
 mat-card-title {
   display: flex;
   align-items: center;
+}
+
+.app-logo {
+  border-radius: 50%; /* Makes the image round */
+  height: 40px;      /* Fixed height */
+  width: 40px;       /* Fixed width */
+  margin-right: 10px; /* Space between logo and title */
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .app-logo {
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+  }
 }
