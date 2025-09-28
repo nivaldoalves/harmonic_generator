@@ -104,7 +104,7 @@ $small-gap: 8px;
 }
 
 .play-chord-btn {
-  @include action-button($primary-dark-color);
+  @include action-button($success-color);
   margin-right: 4px;
   &:hover .mat-icon {
     color: $success-color;
