@@ -151,12 +151,6 @@ $border-radius: 4px;
   @include flex-container(column, $align: center);
 }
 
-.scale-degree {
-  font-size: 0.8em;
-  font-weight: bold;
-  color: $text-color-light;
-}
-
 .scale-note {
   padding: $spacing-medium;
   border: 1px solid #ccc;
@@ -175,7 +169,7 @@ $border-radius: 4px;
   font-style: italic;
   text-align: center;
   padding: $spacing-xlarge 0;
-}
+}
 .chord-visualization-name {
   font-size: 1.5em;
   font-weight: bold;
@@ -254,5 +248,25 @@ mat-card-title {
     height: 30px;
     width: 30px;
     margin-right: 5px;
+  }
+}
+
+// Footer
+.footer {
+  width: 100%;
+
+  .footer-content {
+    @include flex-container(row, $justify: center, $align: center, $gap: $spacing-small);
+    width: 100%;
+    padding: 0 $spacing-large;
+
+    a {
+      color: white;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }

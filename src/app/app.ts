@@ -39,6 +39,8 @@ export class App implements OnInit {
 
   currentPianoHighlightNotes: string[] = []; // Nova propriedade para controlar o destaque do piano
 
+  currentYear: number = new Date().getFullYear(); // Adicionar propriedade para o ano atual
+
   constructor(public musicTheoryService: MusicTheoryService, private audioService: AudioService, public dialog: MatDialog) {}
 
   ngOnInit() {
