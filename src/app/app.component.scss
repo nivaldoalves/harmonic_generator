@@ -236,8 +236,8 @@ mat-card-title {
 
 .app-logo {
   border-radius: 50%; /* Makes the image round */
-  height: 40px;      /* Fixed height */
-  width: 40px;       /* Fixed width */
+  height: 40px; /* Fixed height */
+  width: 40px; /* Fixed width */
   margin-right: 10px; /* Space between logo and title */
   object-fit: cover; /* Ensures the image covers the area without distortion */
   cursor: pointer;
@@ -254,17 +254,13 @@ mat-card-title {
 
 // Footer
 .footer {
+  font-size: 1rem;
   width: 100%;
   height: auto;
   padding: 16px 0;
 
   .footer-content {
-    @include flex-container(
-      row,
-      $justify: center,
-      $align: center,
-      $gap: $spacing-large
-    );
+    @include flex-container(row, $justify: center, $align: center, $gap: $spacing-large);
     width: 100%;
     padding: 0 $spacing-large;
     flex-wrap: wrap;
@@ -280,12 +276,7 @@ mat-card-title {
     }
 
     @media (max-width: 600px) {
-      @include flex-container(
-        column,
-        $justify: center,
-        $align: center,
-        $gap: $spacing-small
-      );
+      @include flex-container(column, $justify: center, $align: center, $gap: $spacing-small);
     }
   }
 }
