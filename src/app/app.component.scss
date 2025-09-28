@@ -254,11 +254,20 @@ mat-card-title {
 // Footer
 .footer {
   width: 100%;
+  height: auto;
+  padding: 16px 0;
 
   .footer-content {
-    @include flex-container(row, $justify: center, $align: center, $gap: $spacing-small);
+    @include flex-container(
+      row,
+      $justify: center,
+      $align: center,
+      $gap: $spacing-large
+    );
     width: 100%;
     padding: 0 $spacing-large;
+    flex-wrap: wrap;
+    text-align: center;
 
     a {
       color: white;
@@ -267,6 +276,15 @@ mat-card-title {
       &:hover {
         text-decoration: underline;
       }
+    }
+
+    @media (max-width: 600px) {
+      @include flex-container(
+        column,
+        $justify: center,
+        $align: center,
+        $gap: $spacing-small
+      );
     }
   }
 }
