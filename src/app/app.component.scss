@@ -11,6 +11,9 @@ $text-color-dark: #111;
 $text-color-light: #666;
 $warn-color: #f57c00;
 
+//Dark-teme
+$dark-background-color: #334155;
+
 $spacing-small: 8px;
 $spacing-medium: 10px;
 $spacing-large: 15px;
@@ -38,7 +41,7 @@ $border-radius: 4px;
 
 // Main Layout
 .main-container {
-  background-color: $medium-gray-color;
+  background-color: $dark-background-color;
   @include flex-container(column, $gap: $spacing-medium);
   padding: $spacing-large;
 }
