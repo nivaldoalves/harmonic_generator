@@ -63,7 +63,6 @@ export class App implements OnInit {
     if (!this.notes.includes(this.selectedNote)) {
       this.selectedNote = 'C';
     }
-    this.generateHarmonicField();
   }
 
   // --- Harmonic Field Logic ---

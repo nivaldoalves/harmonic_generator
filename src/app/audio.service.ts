@@ -70,7 +70,8 @@ export class AudioService {
   }
 
   private formatNote(noteName: string, octave: number): string {
-    return `${noteName.replace('/', '')}${octave}`;
+    const formattedNote = noteName.replace('/', '').replace('♭', 'b');
+    return `${formattedNote}${octave}`;
   }
 
   async playChord(notes: string[]) {
