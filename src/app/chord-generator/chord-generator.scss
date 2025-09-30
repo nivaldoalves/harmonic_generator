@@ -1,14 +1,32 @@
 // Variables
-$form-field-background-color: rgba(0, 0, 0, 0.04);
-$form-field-border-color: rgba(0, 0, 0, 0.42);
-$label-color: rgba(0, 0, 0, 0.6);
-$toggle-button-border-color: rgba(0, 0, 0, 0.12);
+
 $border-radius: 4px;
 $font-family: Roboto, 'Helvetica Neue', sans-serif;
 $primary-color: #3f51b5;
+$slate-800: #1e293b;
+$slate-700: #334155;
+$slate-100: #f1f5f9;
+$slate-400: #94a3b8;
+$slate-600: #475569;
+
+// Main Layout
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  background-color: $slate-800;
+  border: 1px solid $slate-700;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 4px $slate-800;
+  padding: 16px;
+  margin-bottom: 20px;
+}
 
 .card-title {
-  color: $primary-color;
+  color: $slate-100;
   font-size: 1.25rem;
   font-weight: 500;
   display: flex;
@@ -24,19 +42,19 @@ $primary-color: #3f51b5;
 // Custom Form Field
 .custom-form-field {
   position: relative;
-  background-color: $form-field-background-color;
+  background-color: $slate-700;
   border-top-left-radius: $border-radius;
   border-top-right-radius: $border-radius;
   padding: 20px 16px 8px 16px;
   margin-bottom: 20px;
-  border-bottom: 1px solid $form-field-border-color;
+  border-bottom: 1px solid $slate-600;
 
   .custom-label {
     position: absolute;
     top: 8px;
     left: 16px;
     font-size: 12px;
-    color: $label-color;
+    color: $slate-400;
     font-family: $font-family;
   }
 }
@@ -52,7 +70,10 @@ $primary-color: #3f51b5;
 
   .toggle-button {
     flex: 1;
-    border: 1px solid $toggle-button-border-color !important;
+    border-radius: $border-radius;
+    border: 1px solid $slate-600;
+    background-color: $slate-800;
+    color: $slate-400;
   }
 }
 
@@ -61,15 +82,10 @@ $primary-color: #3f51b5;
   vertical-align: middle;
   margin-left: 8px;
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.54);
+  color: $slate-400;
   transition: color 0.2s ease-in-out;
 
   &:hover {
-    color: #3f51b5;
+    color: $primary-color;
   }
-}
-
-mat-card-title {
-  display: flex;
-  align-items: center;
 }
