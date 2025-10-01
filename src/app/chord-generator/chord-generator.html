@@ -28,7 +28,7 @@
     </div>
 
     <!-- Seletor de Tônica -->
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field class="full-width">
       <mat-label class="custom-label">Tônica</mat-label>
       <mat-select [(ngModel)]="selectedRoot">
         <mat-option *ngFor="let note of notes" [value]="note">{{ note }}</mat-option>
@@ -36,7 +36,7 @@
     </mat-form-field>
 
     <!-- Seletor de Tipo de Acorde -->
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field class="full-width">
       <mat-label class="custom-label">Tipo de Acorde</mat-label>
       <mat-select [(ngModel)]="selectedChordType">
         <mat-option *ngFor="let type of chordTypes" [value]="type.value"
@@ -46,7 +46,7 @@
     </mat-form-field>
 
     <!-- Seletor de Inversão -->
-    <mat-form-field appearance="fill" class="full-width">
+    <mat-form-field class="full-width">
       <mat-label class="custom-label">Inversão</mat-label>
       <mat-select [(ngModel)]="selectedInversion">
         <mat-option *ngFor="let inversion of inversions" [value]="inversion.value"

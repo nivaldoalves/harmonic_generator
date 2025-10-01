@@ -11,11 +11,6 @@ $slate-600: #475569;
 
 // Main Layout
 
-mat-card-title {
-  display: flex;
-  align-items: center;
-}
-
 .card {
   background-color: $slate-800;
   border: 1px solid $slate-700;
@@ -23,15 +18,20 @@ mat-card-title {
   box-shadow: 0 2px 4px $slate-800;
   padding: 16px;
   margin-bottom: 20px;
-}
 
-.card-title {
-  color: $slate-100;
-  font-size: 1.25rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  mat-card-title {
+    display: flex;
+    align-items: center;
+  }
+
+  .card-title {
+    color: $slate-100;
+    font-size: 1.25rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 }
 
 // Utility
