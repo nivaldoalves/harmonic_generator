@@ -15,7 +15,6 @@ $slate-600: #475569;
   background-color: $slate-800;
   border: 1px solid $slate-700;
   border-radius: $border-radius;
-  box-shadow: 0 2px 4px $slate-800;
   padding: 16px;
   margin-bottom: 20px;
 
@@ -39,7 +38,7 @@ $slate-600: #475569;
   background-color: $slate-700;
   border: 1px solid $slate-600;
   border-radius: $border-radius;
-  box-shadow: 0 2px 4px $slate-800;
+  // box-shadow: 0 2px 4px $slate-800;
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 16px;

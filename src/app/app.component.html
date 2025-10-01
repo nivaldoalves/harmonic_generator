@@ -23,8 +23,8 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="controls-container">
-          <mat-form-field appearance="fill">
-            <mat-label>Nota Raiz</mat-label>
+          <mat-form-field>
+            <mat-label class="form-label">Nota Raiz</mat-label>
             <mat-select [(ngModel)]="selectedNote" [disabled]="isHarmonicFieldLocked">
               <mat-option *ngFor="let note of notes" [value]="note">{{ note }}</mat-option>
             </mat-select>
@@ -88,9 +88,17 @@
             </mat-card-title>
           </div>
           <div *ngIf="isHarmonicFieldLocked">
-            <mat-card-title>
+            <mat-card-title class="card-title">
               Campo Harmônico de {{ selectedNote.split('/')[0] }}
               {{ selectedMode === 'major' ? 'Maior' : 'Menor' }}
+              <mat-icon
+                class="help-icon"
+                matTooltip="Ajuda"
+                (click)="
+                  openHelpDialog('Campo Harmônico', 'Texto explicativo sobre campo harmônico...')
+                "
+                >info</mat-icon
+              >
             </mat-card-title>
             <mat-card-subtitle>Clique em um acorde para visualizar</mat-card-subtitle>
           </div>
@@ -129,9 +137,15 @@
             </mat-card-title>
           </div>
           <div *ngIf="isHarmonicFieldLocked">
-            <mat-card-title>
+            <mat-card-title class="card-title">
               Escala de {{ selectedNote.split('/')[0] }}
               {{ selectedMode === 'major' ? 'Maior' : 'Menor' }}
+              <mat-icon
+                class="help-icon"
+                matTooltip="Ajuda"
+                (click)="openHelpDialog('Escala', 'Texto explicativo sobre escala...')"
+                >info</mat-icon
+              >
             </mat-card-title>
             <mat-card-subtitle>Clique em uma nota para ouvir</mat-card-subtitle>
           </div>
@@ -164,7 +178,11 @@
     <mat-card class="card">
       <mat-card-header>
         <mat-card-title class="card-title">
-          Visualização do Acorde
+          Visualização do Acorde:
+
+          <mat-card-subtitle class="chord-visualization-name">{{
+            selectedChordName
+          }}</mat-card-subtitle>
           <mat-icon
             class="help-icon"
             matTooltip="Ajuda"
@@ -177,9 +195,6 @@
             >info</mat-icon
           >
         </mat-card-title>
-        <mat-card-subtitle class="chord-visualization-name">{{
-          selectedChordName
-        }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content class="piano-container">
         <app-piano
