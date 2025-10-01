@@ -36,7 +36,20 @@ mat-card-title {
 
 // Utility
 .full-width {
+  background-color: $slate-700;
+  border: 1px solid $slate-600;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 4px $slate-800;
   width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  color: $slate-100;
+}
+
+.custom-label {
+  color: $slate-700;
+  font-size: 16px;
+  font-family: $font-family;
 }
 
 // Custom Form Field
@@ -53,7 +66,7 @@ mat-card-title {
     position: absolute;
     top: 8px;
     left: 16px;
-    font-size: 12px;
+    font-size: 13px;
     color: $slate-400;
     font-family: $font-family;
   }
