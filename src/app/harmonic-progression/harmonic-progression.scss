@@ -92,6 +92,10 @@ $border-radius-large: 16px;
         color: $slate-400;
         font-weight: 500;
       }
+
+      ::ng-deep span.mdc-switch__ripple {
+        display: none;
+      }
     }
   }
 
