@@ -1,29 +1,28 @@
-// Variables
+//==============================================================================
+// VARIABLES & MIXINS
+//==============================================================================
+
+// Colors
 $primary-color: #3f51b5;
 $accent-color: #ff4081;
-$warn-color: #f44336;
-$yellow-color: #fdd835;
-$light-gray-color: #f5f5f5;
-$medium-gray-color: #e0e0e0;
-$dark-gray-color: #888;
-$border-color: #eee;
-$text-color-dark: #111;
-$text-color-light: #666;
 $warn-color: #f57c00;
-$slate-800: #1e293b;
-$slate-700: #334155;
+$yellow-color: #fdd835;
+
+// Slate Palette (for dark theme)
 $slate-100: #f1f5f9;
 $slate-400: #94a3b8;
 $slate-600: #475569;
+$slate-700: #334155;
+$slate-800: #1e293b;
+$slate-900: #0f172a;
 
-//Dark-theme
-$dark-background-color: #0f172a; // slate-900
-
+// Spacing
 $spacing-small: 8px;
 $spacing-medium: 10px;
 $spacing-large: 15px;
 $spacing-xlarge: 20px;
 
+// Borders
 $border-radius: 4px;
 
 // Mixins
@@ -35,57 +34,9 @@ $border-radius: 4px;
   gap: $gap;
 }
 
-// Main Layout
-.main-container {
-  background-color: $dark-background-color;
-  @include flex-container(column, $gap: $spacing-medium);
-  padding: $spacing-large;
-}
-
-.top-section {
-  @include flex-container(row, $gap: $spacing-medium);
-  flex-wrap: wrap;
-}
-
-.bottom-section {
-  width: 100%;
-}
-
-.column {
-  @include flex-container(column, $gap: $spacing-medium);
-  flex: 1;
-  min-width: 320px;
-}
-
-.right-column .card {
-  flex-grow: 1;
-  @include flex-container(column);
-
-  mat-card-content {
-    flex-grow: 1;
-    @include flex-container(column, $justify: center);
-  }
-}
-// Ton / Campo Harmônico
-
-mat-form-field {
-  position: relative;
-  background-color: $slate-700;
-  border: 1px solid $slate-600;
-  border-radius: $border-radius;
-}
-
-.form-label {
-  color: $slate-700;
-}
-
-.mat-button-toggle-group {
-  background-color: $slate-700;
-  border: 1px solid $slate-600;
-  border-radius: $border-radius;
-}
-
-// Cards and Containers
+//==============================================================================
+// GLOBAL & SHARED STYLES
+//==============================================================================
 
 .card {
   width: 100%;
@@ -111,163 +62,6 @@ mat-card-subtitle {
   margin-top: -4px;
 }
 
-.chord-visualization-name {
-  margin-bottom: $spacing-small;
-  color: $slate-400;
-  font-weight: bold;
-}
-
-.controls-container {
-  @include flex-container(row, $align: baseline, $gap: $spacing-xlarge);
-  flex-wrap: wrap;
-
-  .mat-mdc-form-field {
-    position: relative;
-    top: 5px;
-  }
-}
-
-.piano-container {
-  min-height: 180px;
-  @include flex-container(row, $justify: center, $align: center);
-}
-
-// Chord and Progression Display
-.chord-display {
-  @include flex-container(row, $justify: space-between);
-  color: $slate-400;
-  border: 1px solid $slate-400;
-  padding: $spacing-small;
-  margin-top: $spacing-small;
-  border-radius: $border-radius;
-  transition: background-color 0.15s ease;
-
-  &:hover {
-    background-color: $slate-700;
-  }
-
-  .chord-name {
-    font-weight: bold;
-  }
-
-  &.major {
-    border-left: 5px solid $primary-color;
-  }
-  &.minor {
-    border-left: 5px solid $accent-color;
-  }
-  &.dominant {
-    border-left: 5px solid $yellow-color;
-  }
-  &.diminished {
-    border-left: 5px solid $warn-color;
-  }
-}
-
-.progression-display {
-  margin-top: $spacing-large;
-  padding: $spacing-large;
-  border: 1px solid $medium-gray-color;
-  border-radius: $border-radius;
-  text-align: center;
-  font-size: 1.1em;
-  letter-spacing: 1px;
-}
-
-.progression-chord {
-  &:hover {
-    background-color: $light-gray-color;
-    border-radius: $border-radius;
-  }
-
-  &.playing {
-    font-weight: bold;
-    color: $accent-color;
-  }
-}
-
-// Scale Display
-.scale-display {
-  @include flex-container(row, $justify: center, $gap: $spacing-medium);
-  flex-wrap: wrap;
-}
-
-.scale-note-container {
-  @include flex-container(column, $align: center);
-}
-
-.scale-note {
-  color: $slate-400;
-  padding: $spacing-medium;
-  border: 1px solid $slate-400;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: $slate-700;
-  }
-}
-
-.scale-degree {
-  margin-top: 4px;
-  font-size: 0.8em;
-  color: $slate-400;
-}
-
-// Text and Placeholders
-.placeholder {
-  color: $warn-color;
-  font-style: italic;
-  text-align: center;
-  padding: $spacing-xlarge 0;
-}
-.chord-visualization-name {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-top: $spacing-small;
-}
-
-// Controls and Actions
-mat-card-actions {
-  @include flex-container(row, $justify: flex-end, $gap: $spacing-small);
-}
-
-mat-slider {
-  width: 100%;
-}
-
-.progression-controls {
-  @include flex-container(row, $justify: space-between, $align: center);
-  width: 100%;
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: $spacing-large;
-  }
-}
-
-.playback-buttons {
-  @include flex-container(row, $gap: $spacing-large);
-}
-
-// Saved Progressions
-.saved-progression-item {
-  @include flex-container(row, $justify: space-between, $align: center);
-  padding: $spacing-small;
-  border-bottom: 1px solid $border-color;
-}
-
-.saved-progression-text {
-  cursor: pointer;
-  flex-grow: 1;
-
-  &:hover {
-    color: $primary-color;
-  }
-}
-
 .help-icon {
   font-size: 18px;
   vertical-align: middle;
@@ -281,30 +75,188 @@ mat-slider {
   }
 }
 
-mat-card-title {
-  display: flex;
-  align-items: center;
+.placeholder {
+  color: $warn-color;
+  font-style: italic;
+  text-align: center;
+  padding: $spacing-xlarge 0;
 }
 
 .app-logo {
-  border-radius: 50%; /* Makes the image round */
-  height: 40px; /* Fixed height */
-  width: 40px; /* Fixed width */
-  margin-right: 10px; /* Space between logo and title */
-  object-fit: cover; /* Ensures the image covers the area without distortion */
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+  object-fit: cover;
   cursor: pointer;
-}
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 600px) {
-  .app-logo {
+  @media (max-width: 600px) {
     height: 30px;
     width: 30px;
     margin-right: 5px;
   }
 }
 
-// Footer
+//==============================================================================
+// HEADER TOOLBAR
+//==============================================================================
+
+mat-toolbar:not(.footer) {
+  span {
+    margin-left: 8px;
+  }
+}
+
+//==============================================================================
+// MAIN CONTAINER
+//==============================================================================
+
+.main-container {
+  background-color: $slate-900;
+  @include flex-container(column, $gap: $spacing-medium);
+  padding: $spacing-large;
+
+  .top-section {
+    @include flex-container(row, $gap: $spacing-medium);
+    flex-wrap: wrap;
+  }
+
+  .column {
+    @include flex-container(column, $gap: $spacing-medium);
+    flex: 1;
+    min-width: 320px;
+  }
+
+  //----------------------------------
+  // Left Column
+  //----------------------------------
+  .left-column {
+    // Card: Defina a Tonalidade
+    .controls-container {
+      @include flex-container(row, $align: baseline, $gap: $spacing-xlarge);
+      flex-wrap: wrap;
+
+      mat-form-field {
+        position: relative;
+        top: 5px; // Fine-tuning alignment
+        background-color: $slate-700;
+        border: 1px solid $slate-600;
+        border-radius: $border-radius;
+      }
+
+      .mat-button-toggle-group {
+        background-color: $slate-700;
+        border: 1px solid $slate-600;
+        border-radius: $border-radius;
+      }
+    }
+
+    mat-card-actions {
+      @include flex-container(row, $justify: flex-end, $gap: $spacing-small);
+    }
+
+    // Card: Campo Harmônico
+    .harmonic-field-card {
+      .chord-display {
+        @include flex-container(row, $justify: space-between);
+        color: $slate-400;
+        border: 1px solid $slate-400;
+        padding: $spacing-small;
+        margin-top: $spacing-small;
+        border-radius: $border-radius;
+        transition: background-color 0.15s ease;
+
+        &:hover {
+          background-color: $slate-700;
+        }
+
+        .chord-name {
+          font-weight: bold;
+        }
+
+        &.major {
+          border-left: 5px solid $primary-color;
+        }
+        &.minor {
+          border-left: 5px solid $accent-color;
+        }
+        &.dominant {
+          border-left: 5px solid $yellow-color;
+        }
+        &.diminished {
+          border-left: 5px solid $warn-color;
+        }
+      }
+    }
+
+    // Card: Escala
+    .scale-display {
+      @include flex-container(row, $justify: center, $gap: $spacing-medium);
+      flex-wrap: wrap;
+
+      .scale-note-container {
+        @include flex-container(column, $align: center);
+      }
+
+      .scale-note {
+        color: $slate-400;
+        padding: $spacing-medium;
+        border: 1px solid $slate-400;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: $slate-700;
+        }
+      }
+
+      .scale-degree {
+        margin-top: 4px;
+        font-size: 0.8em;
+        color: $slate-400;
+      }
+    }
+  }
+
+  //----------------------------------
+  // Right Column
+  //----------------------------------
+  .right-column {
+    .card {
+      flex-grow: 1;
+      @include flex-container(column);
+
+      mat-card-content {
+        flex-grow: 1;
+        @include flex-container(column, $justify: center);
+      }
+    }
+  }
+
+  //----------------------------------
+  // Bottom Section
+  //----------------------------------
+  .bottom-section {
+    .chord-visualization-name {
+      color: $slate-400;
+      font-weight: bold;
+      font-size: 1.5em;
+      margin-top: $spacing-small;
+      margin-bottom: $spacing-small;
+    }
+
+    .piano-container {
+      min-height: 180px;
+      @include flex-container(row, $justify: center, $align: center);
+    }
+  }
+}
+
+//==============================================================================
+// FOOTER
+//==============================================================================
+
 .footer {
   font-size: 1rem;
   width: 100%;
