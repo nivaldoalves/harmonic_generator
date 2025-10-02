@@ -1,16 +1,14 @@
-// Variables
-
+/* Variables */
 $border-radius: 4px;
-$font-family: Roboto, 'Helvetica Neue', sans-serif;
+$font-family: Roboto, "Helvetica Neue", sans-serif;
 $primary-color: #3f51b5;
-$slate-800: #1e293b;
-$slate-700: #334155;
 $slate-100: #f1f5f9;
 $slate-400: #94a3b8;
 $slate-600: #475569;
+$slate-700: #334155;
+$slate-800: #1e293b;
 
-// Main Layout
-
+/* Main Card Layout */
 .card {
   background-color: $slate-800;
   border: 1px solid $slate-700;
@@ -18,11 +16,7 @@ $slate-600: #475569;
   padding: 16px;
   margin-bottom: 20px;
 
-  mat-card-title {
-    display: flex;
-    align-items: center;
-  }
-
+  /* Card Header */
   .card-title {
     color: $slate-100;
     font-size: 1.25rem;
@@ -30,93 +24,92 @@ $slate-600: #475569;
     display: flex;
     align-items: center;
     gap: 8px;
+
+    .help-icon {
+      font-size: 18px;
+      vertical-align: middle;
+      cursor: pointer;
+      color: $slate-400;
+      transition: color 0.2s ease-in-out;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
   }
-}
 
-// Utility
-.full-width {
-  background-color: $slate-700;
-  border: 1px solid $slate-600;
-  border-radius: $border-radius;
-  // box-shadow: 0 2px 4px $slate-800;
-  width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  color: $slate-100;
-}
+  /* Card Content */
+  .controls-container {
+    .custom-form-field {
+      position: relative;
+      background-color: $slate-700;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+      padding: 20px 16px 8px 16px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid $slate-600;
 
-.custom-label {
-  color: $slate-700;
-  font-size: 16px;
-  font-family: $font-family;
-}
+      .custom-label {
+        position: absolute;
+        top: 8px;
+        left: 16px;
+        font-size: 13px;
+        color: $slate-400;
+        font-family: $font-family;
+      }
 
-// Custom Form Field
-.custom-form-field {
-  position: relative;
-  background-color: $slate-700;
-  border-top-left-radius: $border-radius;
-  border-top-right-radius: $border-radius;
-  padding: 20px 16px 8px 16px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid $slate-600;
+      .mat-button-toggle-group {
+        border: none;
+        width: 100%;
+        display: flex;
+        margin-top: 8px;
+        border-radius: $border-radius;
+        overflow: hidden;
 
-  .custom-label {
-    position: absolute;
-    top: 8px;
-    left: 16px;
-    font-size: 13px;
-    color: $slate-400;
-    font-family: $font-family;
+        .toggle-button {
+          flex: 1;
+          border-radius: $border-radius;
+          border: 1px solid $slate-600;
+          background-color: $slate-800;
+          color: $slate-100;
+        }
+      }
+    }
+
+    .full-width {
+      background-color: $slate-700;
+      border: 1px solid $slate-600;
+      border-radius: $border-radius;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+      color: $slate-100;
+
+      .custom-label {
+        color: $slate-700;
+        font-size: 16px;
+        font-family: $font-family;
+      }
+    }
   }
-}
 
-// Material Button Toggle
-.mat-button-toggle-group {
-  border: none;
-  width: 100%;
-  display: flex;
-  margin-top: 8px;
-  border-radius: $border-radius;
-  overflow: hidden;
+  /* Card Actions */
+  .actions-container {
+    display: flex;
+    justify-content: left;
+    padding: 16px;
 
-  .toggle-button {
-    flex: 1;
-    border-radius: $border-radius;
-    border: 1px solid $slate-600;
-    background-color: $slate-800;
-    color: $slate-400;
-  }
-}
+    button {
+      background-color: accent-color;
+      color: white;
+      font-weight: 500;
+      border-radius: $border-radius;
+      padding: 8px 16px;
+      transition: background-color 0.3s ease;
 
-.help-icon {
-  font-size: 18px;
-  vertical-align: middle;
-  margin-left: 8px;
-  cursor: pointer;
-  color: $slate-400;
-  transition: color 0.2s ease-in-out;
-
-  &:hover {
-    color: $primary-color;
-  }
-}
-
-.actions-container {
-  display: flex;
-  justify-content: left;
-  padding: 16px;
-
-  button {
-    background-color: accent-color;
-    color: white;
-    font-weight: 500;
-    border-radius: $border-radius;
-    padding: 8px 16px;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: darken($primary-color, 10%);
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
     }
   }
 }
