@@ -139,14 +139,14 @@ mat-toolbar:not(.footer) {
       mat-form-field {
         position: relative;
         top: 5px; // Fine-tuning alignment
-        background-color: $slate-700;
-        border: 1px solid $slate-600;
+        background-color: $slate-800;
+        border: 1px solid $slate-700;
         border-radius: $border-radius;
       }
 
       .mat-button-toggle-group {
-        background-color: $slate-700;
-        border: 1px solid $slate-600;
+        background-color: $slate-800;
+        border: 1px solid $slate-700;
         border-radius: $border-radius;
       }
     }

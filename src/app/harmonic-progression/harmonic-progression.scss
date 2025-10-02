@@ -7,6 +7,7 @@
 // Cores
 $primary-color: #1976d2;
 $accent-color: #ff4081;
+$accent-color-hover: #ff4080c9;
 $success-color: #388e3c;
 $danger-color: red;
 $warn-color: #f57c00;
@@ -76,20 +77,19 @@ $border-radius-large: 16px;
     }
 
     .slide-toggle {
-      background-color: $slate-700;
-      border: 1px solid $slate-600;
+      background-color: $accent-color;
       border-radius: $border-radius-small;
       padding: 4px $small-gap;
       cursor: pointer;
       transition: background-color 0.2s ease-in-out;
 
       &:hover {
-        background-color: $accent-color;
+        background-color: $accent-color-hover;
       }
 
       p {
         margin: 0;
-        color: $slate-400;
+        color: $slate-100;
         font-weight: 500;
       }
 
@@ -110,8 +110,8 @@ $border-radius-large: 16px;
       flex-wrap: wrap;
       gap: $small-gap;
       padding: $gap;
-      background-color: $slate-700;
-      border: 1px solid $slate-600;
+      background-color: $slate-800;
+      border: 1px solid $slate-700;
       border-radius: $border-radius-small;
       min-height: 60px;
       align-items: center;
@@ -175,8 +175,8 @@ $border-radius-large: 16px;
       align-items: center;
 
       .bpm-field {
-        background-color: $slate-700;
-        border: 1px solid $slate-600;
+        background-color: $slate-800;
+        border: 1px solid $slate-700;
         border-radius: $border-radius-small;
         width: 100px;
       }
@@ -192,8 +192,8 @@ $border-radius-large: 16px;
     padding: $gap 0 0;
 
     .progression-name-field {
-      background-color: $slate-700;
-      border: 1px solid $slate-600;
+      background-color: $slate-800;
+      border: 1px solid $slate-700;
       border-radius: $border-radius-small;
       flex-grow: 1;
 
