@@ -1,32 +1,30 @@
-// Variables
+/*
+ * Variáveis e Mixins
+ * As variáveis e mixins a seguir são usadas para manter a consistência visual e
+ * o comportamento em todo o componente de progressão harmônica.
+ */
+
+// Cores
 $primary-color: #1976d2;
 $accent-color: #ff4081;
-$primary-dark-color: #3f51b5;
 $success-color: #388e3c;
 $danger-color: red;
-$light-gray-color: #e0e0e0;
-$text-color-light: white;
-$border-color: rgba(0, 0, 0, 0.12);
-$placeholder-color: rgba(0, 0, 0, 0.54);
 $warn-color: #f57c00;
 
-$border-radius-small: 4px;
-$border-radius-large: 16px;
-$border-radius-round: 20%;
+// Paleta de Cores Slate
+$slate-100: #f1f5f9;
+$slate-400: #94a3b8;
+$slate-600: #475569;
+$slate-700: #334155;
+$slate-800: #1e293b;
 
+// Layout
 $gap: 16px;
 $small-gap: 8px;
+$border-radius-small: 4px;
+$border-radius-large: 16px;
 
-.card-title {
-  color: $primary-dark-color;
-  font-size: 1.25rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-// Mixins
+// Mixin para ícones
 @mixin icon-size($size: 16px) {
   font-size: $size;
   width: $size;
@@ -34,148 +32,204 @@ $small-gap: 8px;
   line-height: $size;
 }
 
-@mixin action-button($bg-color) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  background-color: $bg-color;
-  color: $text-color-light;
-  border-radius: $border-radius-round;
-}
-
-// General Layout
-.card-header-with-toggle {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.progression-display {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $small-gap;
-  padding: $gap;
-  border: 1px solid $border-color;
+/*
+ * Estilos do Card Principal
+ * O card principal é o contêiner para toda a funcionalidade de progressão harmônica.
+ */
+.card {
+  background-color: $slate-800;
+  border: 1px solid $slate-700;
   border-radius: $border-radius-small;
-  min-height: 60px;
-  align-items: center;
-  margin-bottom: $gap;
-
-  .placeholder {
-    // Cor do texto de aviso quando a progressão está vazia
-    color: $warn-color;
-    font-style: italic;
-  }
-}
-
-// Chord Chip
-.chord-chip {
+  padding: $gap;
   display: flex;
-  align-items: center;
-  padding: 4px $small-gap;
-  background-color: $light-gray-color;
-  border-radius: $border-radius-large;
-  font-weight: 500;
+  flex-direction: column;
+  width: 100%;
 
-  &.active {
-    background-color: $primary-color;
-    color: $text-color-light;
+  // Cabeçalho do Card
+  .card-header-with-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $gap;
+    margin-bottom: $gap;
+
+    .card-title {
+      color: $slate-100;
+      font-size: 1.25rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: $small-gap;
+
+      .help-icon {
+        font-size: 18px;
+        vertical-align: middle;
+        cursor: pointer;
+        color: $slate-400;
+        transition: color 0.2s ease-in-out;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+
+    .slide-toggle {
+      background-color: $slate-700;
+      border: 1px solid $slate-600;
+      border-radius: $border-radius-small;
+      padding: 4px $small-gap;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: $accent-color;
+      }
+
+      p {
+        margin: 0;
+        color: $slate-400;
+        font-weight: 500;
+      }
+    }
+  }
+
+  // Conteúdo do Card
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: $gap;
+
+    .progression-display {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $small-gap;
+      padding: $gap;
+      background-color: $slate-700;
+      border: 1px solid $slate-600;
+      border-radius: $border-radius-small;
+      min-height: 60px;
+      align-items: center;
+
+      .placeholder {
+        color: $warn-color;
+        font-style: italic;
+      }
+
+      .chord-chip {
+        display: flex;
+        align-items: center;
+        padding: 4px $small-gap;
+        background-color: $slate-100;
+        border-radius: $border-radius-large;
+        font-weight: 500;
+
+        &.active {
+          background-color: $primary-color;
+          color: white;
+        }
+
+        .play-chord-btn,
+        .remove-chord-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+          color: white;
+          border-radius: 20%;
+
+          .mat-icon {
+            @include icon-size(16px);
+          }
+        }
+
+        .play-chord-btn {
+          background-color: $success-color;
+          margin-right: $small-gap;
+        }
+
+        .remove-chord-btn {
+          background-color: $accent-color;
+          margin-left: $small-gap;
+
+          &:hover {
+            .mat-icon {
+              color: $danger-color;
+            }
+          }
+        }
+      }
+    }
+
+    .playback-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $small-gap;
+      align-items: center;
+
+      .bpm-field {
+        background-color: $slate-700;
+        border: 1px solid $slate-600;
+        border-radius: $border-radius-small;
+        width: 100px;
+      }
+    }
+  }
+
+  // Ações do Card
+  .save-load-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $small-gap;
+    align-items: center;
+    padding: $gap 0 0;
+
+    .progression-name-field {
+      background-color: $slate-700;
+      border: 1px solid $slate-600;
+      border-radius: $border-radius-small;
+      flex-grow: 1;
+
+      .delete-icon-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        background-color: $accent-color;
+        color: white;
+        border-radius: 20%;
+        margin-left: $small-gap;
+        margin-right: 5px;
+
+        .delete-icon {
+          @include icon-size(16px);
+
+          &:hover {
+            color: $danger-color;
+          }
+        }
+      }
+    }
   }
 }
 
-// Action Buttons
-.remove-chord-btn {
-  @include action-button($accent-color);
-  margin: 0 $small-gap 0 4px;
-  &:hover .mat-icon {
-    color: $danger-color;
-  }
-}
-
-.delete-icon-button {
-  @include action-button($accent-color);
-  margin: 0 $small-gap 0 4px;
-  &:hover .delete-icon {
-    color: $danger-color;
-  }
-}
-
-.play-chord-btn {
-  @include action-button($success-color);
-  margin-right: 4px;
-  &:hover .mat-icon {
-    color: $success-color;
-  }
-}
-
-// Icons
-.mat-icon:not(.help-icon) {
-  @include icon-size;
-}
-
-.delete-icon {
-  @include icon-size;
-  &:hover {
-    color: $danger-color;
-  }
-}
-
-// Controls
-.playback-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $small-gap;
-  align-items: center;
-  margin-bottom: $gap;
-
-  .bpm-field {
-    width: 100px;
-  }
-}
-
-.save-load-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $small-gap;
-  align-items: center;
-  padding: 0 $gap $gap;
-
-  .progression-name-field {
-    flex-grow: 1;
-  }
-}
-
-.help-icon {
-  font-size: 18px;
-  vertical-align: middle;
-  margin-left: 8px;
-  cursor: pointer;
-  color: rgba(0, 0, 0, 0.54);
-  transition: color 0.2s ease-in-out;
-
-  &:hover {
-    color: $primary-color;
-  }
-}
-
-mat-card-title {
-  display: flex;
-  align-items: center;
-}
-
+/*
+ * Estilos Responsivos
+ * Ajustes para telas menores para garantir a usabilidade.
+ */
 @media (max-width: 600px) {
   .playback-controls,
   .save-load-actions {
-    gap: $small-gap;
-
     .mat-button,
     .mat-raised-button,
     .mat-stroked-button {
-      font-size: 12px; // Reduz o tamanho da fonte dos botões
-      padding: 0 8px; // Ajusta o padding dos botões
+      font-size: 12px;
+      padding: 0 8px;
     }
   }
 }
