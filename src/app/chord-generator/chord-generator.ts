@@ -86,13 +86,44 @@ export class ChordGenerator {
   selectedInversion: number = 0;
   useFlats: boolean = false;
 
-  constructor(private musicTheoryService: MusicTheoryService, private audioService: AudioService, public dialog: MatDialog) {}
+  constructor(
+    private musicTheoryService: MusicTheoryService,
+    private audioService: AudioService,
+    public dialog: MatDialog
+  ) {}
 
   openHelpDialog(title: string, content: string): void {
     this.dialog.open(HelpDialogComponent, {
       width: '400px',
       data: { title, content },
     });
+  }
+
+  openChordHelp(): void {
+    const title = 'Como usar o Gerador de Acordes';
+    const content = `
+    <p>Siga estes passos simples para gerar um acorde completo:</p>
+    <h2>1. Defina as Características do Acorde:</h2>
+    <ul>
+    <li>Escolha a alteração: Sustenido (♯) ou Bemol (♭).</li>
+      <li>Escolha a Nota Raiz do acorde.</li>
+      <li>Selecione o Tipo de Acorde (Maior, Menor, Diminuto, etc.).</li>
+      <li>Escolha a Inversão do acorde (Fundamental, 1ª Inversão, etc.).</li>
+    </ul>
+    <h2>2. Gere e Toque o Acorde:</h2>
+    <ul>
+      <li>Clique em <strong>Ouvir Acorde</strong>.</li>
+    </ul>
+    <hr>
+    <h2>O que Acontece Após Gerar</h2>
+    <h3>Acorde e Notas:</h3>
+    <p>Após clicar em "Ouvir Acorde", o gerador irá:</p>
+    <ul>
+      <li>Reproduzir o som do acorde selecionado.</li>
+      <li>Exibir as notas que compõem o acorde no Piano Virtual.</li>
+    </ul>
+`;
+    this.openHelpDialog(title, content);
   }
 
   get notes(): string[] {
