@@ -41,7 +41,11 @@ export class App implements OnInit {
 
   currentYear: number = new Date().getFullYear(); // Adicionar propriedade para o ano atual
 
-  constructor(public musicTheoryService: MusicTheoryService, private audioService: AudioService, public dialog: MatDialog) {}
+  constructor(
+    public musicTheoryService: MusicTheoryService,
+    private audioService: AudioService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     // O campo harmônico não será mais gerado automaticamente na inicialização
@@ -53,6 +57,39 @@ export class App implements OnInit {
       width: '400px',
       data: { title, content },
     });
+  }
+
+  openTonalidadeHelp(): void {
+    const title = 'Como Gerar um Campo Harmônico';
+    const content = `
+      <p>Siga estes passos simples para gerar seu campo harmônico completo:</p>
+      <h2>1. Defina as Características:</h2>
+      <ul>
+        <li>Escolha a alteração: Sustenido (♯) ou Bemol (♭).</li>
+        <li>Escolha a modalidade: Maior ou Menor.</li>
+      </ul>
+      <h2>2. Escolha a Nota Raiz:</h2>
+      <ul>
+        <li>Selecione a Nota Raiz que dará nome ao campo harmônico (será o acorde principal).</li>
+      </ul>
+      <h2>3. Gere o Campo:</h2>
+      <ul>
+        <li>Clique em <strong>Gerar Campo Harmônico</strong>.</li>
+      </ul>
+      <hr>
+      <h2>O que Acontece Após Gerar</h2>
+      <h3>Campo Harmônico e Acordes:</h3>
+      <p>O campo aparecerá abaixo, mostrando os 7 acordes e suas notas.</p>
+      <ul>
+        <li><strong>Interaja:</strong> Clique em qualquer acorde para ouvir e visualizar a formação no Piano Virtual.</li>
+      </ul>
+      <h3>Escala Relacionada:</h3>
+      <p>A Escala referente ao campo harmônico será exibida logo abaixo.</p>
+      <ul>
+        <li><strong>Interaja:</strong> Clique em qualquer nota da escala para ouvir e visualizar no Piano Virtual.</li>
+      </ul>
+    `;
+    this.openHelpDialog(title, content);
   }
 
   get notes(): string[] {
