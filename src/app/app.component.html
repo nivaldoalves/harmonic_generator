@@ -12,12 +12,7 @@
         <mat-card-header>
           <mat-card-title class="card-title">
             Defina a Tonalidade
-            <mat-icon
-              class="help-icon"
-              matTooltip="Ajuda"
-              (click)="
-                openTonalidadeHelp()
-              "
+            <mat-icon class="help-icon" matTooltip="Ajuda" (click)="openTonalidadeHelp()"
               >info</mat-icon
             >
           </mat-card-title>
@@ -75,30 +70,12 @@
       <mat-card class="card harmonic-field-card">
         <mat-card-header>
           <div *ngIf="!isHarmonicFieldLocked">
-            <mat-card-title class="card-title">
-              Campo Harmônico
-              <mat-icon
-                class="help-icon"
-                matTooltip="Ajuda"
-                (click)="
-                  openHelpDialog('Campo Harmônico', 'Texto explicativo sobre campo harmônico...')
-                "
-                >info</mat-icon
-              >
-            </mat-card-title>
+            <mat-card-title class="card-title"> Campo Harmônico </mat-card-title>
           </div>
           <div *ngIf="isHarmonicFieldLocked">
             <mat-card-title class="card-title">
               Campo Harmônico de {{ selectedNote.split('/')[0] }}
               {{ selectedMode === 'major' ? 'Maior' : 'Menor' }}
-              <mat-icon
-                class="help-icon"
-                matTooltip="Ajuda"
-                (click)="
-                  openHelpDialog('Campo Harmônico', 'Texto explicativo sobre campo harmônico...')
-                "
-                >info</mat-icon
-              >
             </mat-card-title>
             <mat-card-subtitle>Clique em um acorde para visualizar</mat-card-subtitle>
           </div>
@@ -126,26 +103,12 @@
       <mat-card class="card">
         <mat-card-header>
           <div *ngIf="!isHarmonicFieldLocked">
-            <mat-card-title class="card-title">
-              Escala
-              <mat-icon
-                class="help-icon"
-                matTooltip="Ajuda"
-                (click)="openHelpDialog('Escala', 'Texto explicativo sobre escala...')"
-                >info</mat-icon
-              >
-            </mat-card-title>
+            <mat-card-title class="card-title"> Escala </mat-card-title>
           </div>
           <div *ngIf="isHarmonicFieldLocked">
             <mat-card-title class="card-title">
               Escala de {{ selectedNote.split('/')[0] }}
               {{ selectedMode === 'major' ? 'Maior' : 'Menor' }}
-              <mat-icon
-                class="help-icon"
-                matTooltip="Ajuda"
-                (click)="openHelpDialog('Escala', 'Texto explicativo sobre escala...')"
-                >info</mat-icon
-              >
             </mat-card-title>
             <mat-card-subtitle>Clique em uma nota para ouvir</mat-card-subtitle>
           </div>
