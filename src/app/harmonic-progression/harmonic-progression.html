@@ -2,19 +2,9 @@
   <mat-card-header class="card-header-with-toggle">
     <mat-card-title class="card-title">
       Progressão Harmônica
-      <mat-icon
-        class="help-icon"
-        matTooltip="Ajuda"
-        (click)="
-          openHelpDialog('Progressão Harmônica', 'Texto explicativo sobre progressão harmônica...')
-        "
-        >info</mat-icon
-      >
+      <mat-icon class="help-icon" matTooltip="Ajuda" (click)="openProgressionHelp()">info</mat-icon>
     </mat-card-title>
-    <mat-slide-toggle
-      class="slide-toggle"
-      [(ngModel)]="autoAddEnabled"
-      matTooltip="Se ligado, os acordes tocados são adicionados automaticamente à progressão"
+    <mat-slide-toggle class="slide-toggle" [(ngModel)]="autoAddEnabled"
       ><p>Adicionar</p>
     </mat-slide-toggle>
   </mat-card-header>
@@ -31,21 +21,11 @@
         class="chord-chip"
         [class.active]="i === currentChordIndex"
       >
-        <button
-          mat-icon-button
-          (click)="playSingleChord(chord)"
-          class="play-chord-btn"
-          matTooltip="Tocar este acorde"
-        >
+        <button mat-icon-button (click)="playSingleChord(chord)" class="play-chord-btn">
           <mat-icon>play_circle_outline</mat-icon>
         </button>
         {{ chord.name }}
-        <button
-          mat-icon-button
-          (click)="removeChord(i)"
-          class="remove-chord-btn"
-          matTooltip="Remover este acorde"
-        >
+        <button mat-icon-button (click)="removeChord(i)" class="remove-chord-btn">
           <mat-icon class="delete-icon">delete</mat-icon>
         </button>
       </div>
@@ -71,7 +51,6 @@
         color="accent"
         (click)="clearProgression()"
         [disabled]="progression.length === 0"
-        matTooltip="Limpar todos os acordes da progressão atual"
       >
         <mat-icon>delete_sweep</mat-icon>
         Limpar
@@ -93,7 +72,6 @@
         mat-icon-button
         matSuffix
         (click)="deleteProgression()"
-        matTooltip="Excluir progressão salva"
       >
         <mat-icon class="delete-icon">delete</mat-icon>
       </button>

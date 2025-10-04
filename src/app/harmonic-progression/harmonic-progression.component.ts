@@ -61,6 +61,34 @@ export class HarmonicProgressionComponent implements OnInit {
     });
   }
 
+  openProgressionHelp(): void {
+    const title = 'Como Gerar uma Progressão de Acordes (Progressão Harmônica)';
+    const content = `
+    <p>Siga estes passos simples para gerar uma progressão de acordes completa:</p>
+    <h2>1. Adicionar:</h2>
+    <ul>
+      <li>Clique no botão <strong>Adicionar</strong> para alterná-lo para a posição <strong>ativado</strong>.</li>
+      <li>Gere um acorde no <strong>Gerador de Acordes</strong> e clique em <strong>Ouvir Acorde</strong>. O acorde será adicionado à progressão.</li>
+      <li>Gere um <strong>Campo Harmônico</strong> e clique em algum acorde do "Campo Harmônico...". O acorde será adicionado à progressão.</li>
+      <p><strong>Observação:</strong> Você pode adicionar quantos acordes desejar à progressão.</p>
+    </ul>
+    <hr>
+    <h2>Após Gerar a Progressão, você pode:</h2>
+    <ul>
+      <li>Reproduzir (Play) o som da Progressão Harmônica.</li>
+      <li>Parar (Stop) a reprodução da Progressão Harmônica.</li>
+      <li>Ajustar o <strong>BPM</strong> (batidas por minuto) para controlar a velocidade da progressão.</li>
+      <li>Salvar a progressão atual dando um nome a ela e clicando em <strong>Salvar</strong>.</li>
+      <li>Carregar uma progressão salva anteriormente clicando em <strong>Progressão</strong>.</li>
+      <li>Excluir a progressão atualmente carregada clicando na lixeira ao lado do nome da progressão.</li>
+      <li>Limpar a progressão atual clicando em <strong>Limpar</strong>.</li>
+      <p><i>Cada acorde na progressão pode ser reproduzido individualmente clicando no ícone de alto-falante ao lado do nome do acorde, ou excluído clicando na lixeira ao lado do nome do acorde.</i></p>
+      <p><strong>Observação:</strong> Certifique-se de salvar sua progressão antes de limpar ou carregar outra, para não perder seu trabalho!</p>
+    </ul>
+`;
+    this.openHelpDialog(title, content);
+  }
+
   addChord(chord: ProgressionChord) {
     this.progression.push(chord);
     this.isProgressionLoaded = false; // Modificação na progressão indica que não é mais a versão salva
