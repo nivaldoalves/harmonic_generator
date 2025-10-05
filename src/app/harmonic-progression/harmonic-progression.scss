@@ -238,11 +238,16 @@ $border-radius-large: 16px;
   }
 }
 
-/* Força a exibição dos botões de rotação do campo de número BPM */
-::ng-deep .bpm-field input[type="number"]::-webkit-inner-spin-button,
-::ng-deep .bpm-field input[type="number"]::-webkit-outer-spin-button {
-  opacity: 1 !important;
-  -webkit-appearance: inner-spin-button !important;
+.bpm-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin-left: 5px;
+}
+
+.bpm-controls button {
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
 }
 
