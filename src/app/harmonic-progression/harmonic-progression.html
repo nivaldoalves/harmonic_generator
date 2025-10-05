@@ -58,14 +58,6 @@
       <mat-form-field appearance="fill" class="bpm-field">
         <mat-label>BPM</mat-label>
         <input matInput type="number" [(ngModel)]="bpm" min="40" max="240" />
-        <div class="bpm-controls">
-          <button mat-icon-button (click)="decrementBpm()">
-            <mat-icon>remove</mat-icon>
-          </button>
-          <button mat-icon-button (click)="incrementBpm()">
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
       </mat-form-field>
     </div>
   </mat-card-content>

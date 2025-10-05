@@ -194,12 +194,4 @@ export class HarmonicProgressionComponent implements OnInit {
     this.progression = [];
     this.isProgressionLoaded = false;
   }
-
-  incrementBpm() {
-    this.bpm = Math.min(240, this.bpm + 1);
-  }
-
-  decrementBpm() {
-    this.bpm = Math.max(40, this.bpm - 1);
-  }
 }
