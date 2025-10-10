@@ -34,6 +34,11 @@ export class App implements OnInit {
   scaleNotes: string[] = [];
   scaleNotesWithDegrees: NoteWithDegree[] = [];
 
+  relativeScaleName: string = '';
+  relativeScaleNotesWithDegrees: NoteWithDegree[] = [];
+
+  generatedScaleName: string = '';
+
   selectedChordName: string = '';
   isHarmonicFieldLocked: boolean = false;
 
@@ -102,9 +107,16 @@ export class App implements OnInit {
     }
   }
 
+  onScaleParametersChange() {
+    if (this.isHarmonicFieldLocked) {
+      this.generateHarmonicField();
+    }
+  }
+
   // --- Harmonic Field Logic ---
   generateHarmonicField() {
     const rootNote = this.selectedNote.split('/')[0];
+    this.generatedScaleName = `${rootNote} ${this.selectedMode === 'major' ? 'Maior' : 'Menor'}`;
     this.harmonicField = this.musicTheoryService.generateHarmonicField(
       rootNote,
       this.selectedMode,
@@ -122,6 +134,7 @@ export class App implements OnInit {
       displayName: note.split('/')[0],
     }));
     this.isHarmonicFieldLocked = true;
+    this.updateRelativeScale();
   }
 
   resetApp() {
@@ -140,6 +153,9 @@ export class App implements OnInit {
     this.scaleNotesWithDegrees = [];
     this.selectedChordName = '';
     this.currentPianoHighlightNotes = []; // Limpa o destaque do piano ao resetar o campo harmônico
+    this.relativeScaleName = '';
+    this.relativeScaleNotesWithDegrees = [];
+    this.generatedScaleName = '';
   }
 
   // --- Chord Interaction Logic ---
@@ -186,5 +202,28 @@ export class App implements OnInit {
   // Novo método para lidar com acordes tocados pelo HarmonicProgressionComponent
   onChordPlayedInProgression(notes: string[]) {
     this.currentPianoHighlightNotes = notes;
+  }
+
+  updateRelativeScale() {
+    const { relativeRoot, relativeMode } = this.musicTheoryService.getRelativeScale(
+      this.selectedNote,
+      this.selectedMode,
+      this.useFlats
+    );
+
+    this.relativeScaleName = `${relativeRoot} ${relativeMode === 'major' ? 'Maior' : 'Menor'}`;
+
+    const relativeScaleNotes = this.musicTheoryService.getScaleNotes(
+      relativeRoot,
+      relativeMode,
+      this.useFlats
+    );
+
+    const degrees = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+    this.relativeScaleNotesWithDegrees = relativeScaleNotes.map((note, index) => ({
+      note,
+      degree: degrees[index],
+      displayName: note.split('/')[0],
+    }));
   }
 }

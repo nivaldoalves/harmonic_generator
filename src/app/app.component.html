@@ -20,14 +20,14 @@
         <mat-card-content class="controls-container">
           <mat-form-field>
             <mat-label class="form-label">Nota Raiz</mat-label>
-            <mat-select [(ngModel)]="selectedNote" [disabled]="isHarmonicFieldLocked">
+            <mat-select [(ngModel)]="selectedNote" [disabled]="isHarmonicFieldLocked" (ngModelChange)="onScaleParametersChange()">
               <mat-option *ngFor="let note of notes" [value]="note">{{ note }}</mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-button-toggle-group
             [(ngModel)]="useFlats"
-            (ngModelChange)="onAccidentalChange()"
+            (ngModelChange)="onAccidentalChange(); onScaleParametersChange()"
             name="accidentals"
             aria-label="Acidentes Musicais"
             [disabled]="isHarmonicFieldLocked"
@@ -38,6 +38,7 @@
 
           <mat-button-toggle-group
             [(ngModel)]="selectedMode"
+            (ngModelChange)="onScaleParametersChange()"
             name="tonalidade"
             aria-label="Tonalidade"
             [disabled]="isHarmonicFieldLocked"
@@ -119,6 +120,24 @@
           </div>
           <div *ngIf="isHarmonicFieldLocked" class="scale-display">
             <div *ngFor="let note of scaleNotesWithDegrees" class="scale-note-container">
+              <span class="scale-degree">{{ note.degree }}</span>
+              <span class="scale-note" (click)="playNote(note.note)">{{ note.displayName }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Seção da Escala Relativa -->
+      <mat-card class="card" *ngIf="isHarmonicFieldLocked">
+        <mat-card-header>
+          <mat-card-title class="card-title">
+            Escala de {{ relativeScaleName }} Relativa de {{ generatedScaleName }}
+          </mat-card-title>
+          <mat-card-subtitle>Clique em uma nota para ouvir</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="scale-display">
+            <div *ngFor="let note of relativeScaleNotesWithDegrees" class="scale-note-container">
               <span class="scale-degree">{{ note.degree }}</span>
               <span class="scale-note" (click)="playNote(note.note)">{{ note.displayName }}</span>
             </div>

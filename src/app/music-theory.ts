@@ -192,4 +192,34 @@ export class MusicTheoryService {
       return `${this.getNoteName(noteIndex, useFlats)}/${octave}`;
     });
   }
+
+  getRelativeScale(
+    rootNote: string,
+    mode: 'major' | 'minor',
+    useFlats: boolean
+  ): { relativeRoot: string; relativeMode: 'major' | 'minor' } {
+    const notes = useFlats ? this.notesFlat : this.notesSharp;
+    const rootIndex = notes.indexOf(rootNote);
+
+    if (rootIndex === -1) {
+      // Fallback or error handling
+      return { relativeRoot: '', relativeMode: mode };
+    }
+
+    if (mode === 'major') {
+      // Relative minor is 3 semitones below
+      const relativeIndex = (rootIndex - 3 + 12) % 12;
+      return {
+        relativeRoot: this.getNoteName(relativeIndex, useFlats),
+        relativeMode: 'minor',
+      };
+    } else {
+      // Relative major is 3 semitones above
+      const relativeIndex = (rootIndex + 3) % 12;
+      return {
+        relativeRoot: this.getNoteName(relativeIndex, useFlats),
+        relativeMode: 'major',
+      };
+    }
+  }
 }
