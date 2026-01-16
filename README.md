@@ -29,18 +29,3 @@ Contributions are welcome! Open an issue or send a pull request.
 
 👤 Author:
 [Nivaldo Alves](https://github.com/nivaldoalves)
-
-📦 Installation:
-
-```bash
-git clone https://github.com/nivaldoalves/harmonic_generator.git
-cd harmonic_generator/
-npm install
-ng server
-
-# Others
-
-
-
-
-```
